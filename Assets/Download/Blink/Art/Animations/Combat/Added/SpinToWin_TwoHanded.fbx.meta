@@ -1,14 +1,14 @@
 fileFormatVersion: 2
-guid: 83cb8742d5b5bec4f86b2e4a26822bef
+guid: ab175008c2515294a824718a7a1e5810
 ModelImporter:
-  serializedVersion: 19301
+  serializedVersion: 21300
   internalIDToNameTable:
   - first:
       74: 416870459326255563
     second: tpose
   - first:
-      74: -2794525774925093413
-    second: SpinLoop_TwoHanded
+      74: -2848136262436828834
+    second: SpinToWin_TwoHanded
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -20,6 +20,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -67,11 +68,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: SpinLoop_TwoHanded
-      takeName: SpinLoop_TwoHanded
+      name: SpinToWin_TwoHanded
+      takeName: SpinToWin_TwoHanded
       internalID: 0
       firstFrame: 2
-      lastFrame: 26
+      lastFrame: 32
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -90,7 +91,21 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.25934064
+        functionName: CompleteAction
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.4923077
+        functionName: CompleteAction
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -107,21 +122,27 @@ ModelImporter:
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    nodeNameCollisionStrategy: 0
     fileIdsGeneration: 2
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
     preserveHierarchy: 0
     skinWeightsMode: 0
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
+    optimizeBones: 1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
   tangentSpace:
@@ -578,13 +599,13 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: SpinAttack_TwoHanded(Clone)
+    - name: SpinToWin_TwoHanded(Clone)
       parentName: 
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Armature
-      parentName: SpinAttack_TwoHanded(Clone)
+      parentName: SpinToWin_TwoHanded(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
@@ -775,12 +796,12 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: jnt_shoulder_R
       parentName: Scapula_R
-      position: {x: -0.12850574, y: -0.016258905, z: 0.04279993}
-      rotation: {x: 0.6558028, y: 0.46923745, z: -0.30153418, w: 0.5087397}
+      position: {x: -0.13244823, y: -0.0028490128, z: 0.06676429}
+      rotation: {x: 0.62850136, y: 0.35963538, z: -0.34436202, w: 0.5975477}
       scale: {x: 1, y: 1, z: 1}
     - name: jnt_shoulderEnd_R
       parentName: jnt_shoulder_R
-      position: {x: -0.09760509, y: -2.1316282e-16, z: 7.851497e-15}
+      position: {x: -0.09760509, y: -2.842171e-16, z: 5.746514e-15}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Scapula_L
@@ -905,12 +926,12 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: jnt_shoulder_L
       parentName: Scapula_L
-      position: {x: 0.13375153, y: 0.035777543, z: -0.056931313}
-      rotation: {x: 0.7372608, y: 0.52926105, z: -0.25117674, w: 0.3365107}
+      position: {x: 0.13846081, y: 0.0034613055, z: -0.079699695}
+      rotation: {x: 0.61096185, y: 0.38868642, z: -0.37197968, w: 0.5807578}
       scale: {x: 1, y: 1, z: 1}
     - name: jnt_shoulderEnd_L
       parentName: jnt_shoulder_L
-      position: {x: 0.09760509, y: 1.0658141e-16, z: -8.526512e-15}
+      position: {x: 0.09760509, y: 4.973799e-16, z: -1.0240697e-14}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hip_R
@@ -980,6 +1001,8 @@ ModelImporter:
   animationType: 3
   humanoidOversampling: 1
   avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

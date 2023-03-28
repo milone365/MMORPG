@@ -1,12 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
-using UnityEngine.AI;
 
-public class NetworkPlayer : MonoBehaviourPun ,Selectable
+public class NetworkPlayer : Entity
 {
-    Animator anim;
+    public string userName = "Tom";
     Rigidbody rb;
     [SerializeField]
     float speed = 5;
@@ -17,20 +15,13 @@ public class NetworkPlayer : MonoBehaviourPun ,Selectable
     [SerializeField]
     KeyCode lockRotKey = KeyCode.M;
     bool lockRot;
-    FollowCamera follow;
-   
-    NavMeshAgent agent;
-
-    [SerializeField]
-    LocalUI ui=null;
+    FollowCamera follow;   
     ActionManager actionManager;
 
     // Start is called before the first frame update
     void Start()
     {
         anim = GetComponent<Animator>();
-        agent = GetComponent<NavMeshAgent>();
-        agent.enabled = false;
         rb = GetComponent<Rigidbody>();
         actionManager = GetComponent<ActionManager>();
 
@@ -44,7 +35,7 @@ public class NetworkPlayer : MonoBehaviourPun ,Selectable
         var camPref = Resources.Load<FollowCamera>(Helper.follower);
         follow = Instantiate(camPref);
         follow.INIT(transform);
-        actionManager.INIT(this, agent, anim, follow);
+        actionManager.INIT(this, anim, follow);
     }
 
     // Update is called once per frame
@@ -88,18 +79,8 @@ public class NetworkPlayer : MonoBehaviourPun ,Selectable
         if(x!=0 || y!=0)
         {
             actionManager.autoattack = false;
-            agent.enabled = false;
         }
     }
 
-    public void Select()
-    {
-        
-    }
     
-    [PunRPC]
-    public void PlayAnimation(string s)
-    {
-        anim.Play(s);
-    }
 }

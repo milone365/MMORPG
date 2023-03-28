@@ -1018,7 +1018,6 @@ GameObject:
   - component: {fileID: 5138290743485073917}
   - component: {fileID: 5138290743485073916}
   - component: {fileID: 5138290743485073907}
-  - component: {fileID: 508729741}
   - component: {fileID: 7260560067265087992}
   m_Layer: 0
   m_Name: Character
@@ -1077,11 +1076,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 749fabb64683b90488f1846d448c41c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stats:
+    maxHp: 10
+    atk: 2
+    def: 3
+    energy: 5
+  ui: {fileID: 0}
+  hp: 10
+  isDeath: 0
+  userName: Tom
   speed: 5
   multipler: 20
   sensitiv: 2
   lockRotKey: 109
-  ui: {fileID: 0}
 --- !u!54 &5138290743485073906
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1181,28 +1188,6 @@ MonoBehaviour:
     LayerIndex: 0
   - SynchronizeType: 0
     LayerIndex: 1
---- !u!195 &508729741
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5138290743485073908}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!114 &7260560067265087992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1217,7 +1202,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultIMG: {fileID: 2800000, guid: 2e71a8202d3b4a3448ec85ced5a40265, type: 3}
   swordIMG: {fileID: 2800000, guid: 2d18e23e3ce249b4489b8bcdd02d3f48, type: 3}
-  bagIMG: {fileID: 0}
+  bagIMG: {fileID: 2800000, guid: f8c873f1e53e83f4aabf342d6be1dfc3, type: 3}
   counter: 0
   attackDealy: 1.7
   meleeAtkDist: 1.5
@@ -1225,6 +1210,34 @@ MonoBehaviour:
   minZoom: 10
   maxZoom: 120
   zoomSpeed: 10
+  autoMoveSpeed: 3
+  rotSpeed: 2
+  upActions:
+  - code: 49
+    skill: {fileID: 0}
+  - code: 50
+    skill: {fileID: 0}
+  - code: 51
+    skill: {fileID: 0}
+  - code: 52
+    skill: {fileID: 0}
+  - code: 53
+    skill: {fileID: 0}
+  - code: 54
+    skill: {fileID: 0}
+  downActions:
+  - code: 122
+    skill: {fileID: 11400000, guid: e9c6b3445b4e25d4c904b3ae070af15b, type: 2}
+  - code: 120
+    skill: {fileID: 0}
+  - code: 99
+    skill: {fileID: 0}
+  - code: 118
+    skill: {fileID: 0}
+  - code: 98
+    skill: {fileID: 0}
+  - code: 110
+    skill: {fileID: 0}
 --- !u!1 &5138290743490025986
 GameObject:
   m_ObjectHideFlags: 0

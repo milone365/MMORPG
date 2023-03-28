@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 using Photon.Pun;
 public class ActionManager : MonoBehaviourPun
 {
@@ -22,20 +21,44 @@ public class ActionManager : MonoBehaviourPun
     float minZoom = 10, maxZoom = 120;
     [SerializeField]
     float zoomSpeed = 10;
-
+    [SerializeField]
+    float autoMoveSpeed = 3;
     NetworkPlayer player = null;
-    NavMeshAgent agent;
     Animator anim;
     FollowCamera follow;
-    
-    public void INIT(NetworkPlayer player,NavMeshAgent agent,Animator anim,FollowCamera cam)
+    float screenH, screenW;
+    PlayerUI playerUi;
+    [SerializeField]
+    float rotSpeed = 2;
+    public List<ActionClass> upActions = new List<ActionClass>()
+    {
+        new ActionClass(){code=KeyCode.Alpha1 },new ActionClass(){code=KeyCode.Alpha2 },
+        new ActionClass(){code=KeyCode.Alpha3 },new ActionClass(){code=KeyCode.Alpha4 },
+        new ActionClass(){code=KeyCode.Alpha5 },new ActionClass(){code=KeyCode.Alpha6 }
+    };
+    public List<ActionClass> downActions = new List<ActionClass>()
+    {
+        new ActionClass(){code=KeyCode.Z },new ActionClass(){code=KeyCode.X },
+        new ActionClass(){code=KeyCode.C },new ActionClass(){code=KeyCode.V },
+        new ActionClass(){code=KeyCode.B },new ActionClass(){code=KeyCode.N }
+    };
+
+    List<ActionClass> allActions = new List<ActionClass>();
+    PhotonView view = null;
+    public void INIT(NetworkPlayer player,Animator anim,FollowCamera cam)
     {
         this.player = player;
         this.follow = cam;
-        this.agent = agent;
         this.anim = anim;
+        screenH = Screen.height;
+        screenW= Screen.width;
         Cursor.SetCursor(defaultIMG, Vector2.zero, CursorMode.Auto);
-        
+        var ui = Resources.Load<PlayerUI>("UIPrefab/PlayerUI");
+        playerUi = Instantiate(ui);
+        playerUi.INIT(player,this);
+        allActions.AddRange(upActions);
+        allActions.AddRange(downActions);
+        view = PhotonView.Get(this);
     }
 
     public void TICK()
@@ -50,10 +73,51 @@ public class ActionManager : MonoBehaviourPun
 
     void KeyBoard()
     {
+        foreach(var item in allActions)
+        {
+            if(Input.GetKeyDown(item.code))
+            {
+                OnPressButton(item.code,item);
+                break;
+            }
+        }
+    }
+    public void OnPressButton(KeyCode code,ActionClass action=null)
+    {
+        var a = action;
+        if(a==null)
+        {
+            a = GetAction(code);
+            if (a == null) return;
+        }
+        if (a.skill == null) return;
+        if (PhotonNetwork.IsConnected)
+        {
+            view.RPC("PlayAnimation", RpcTarget.All, a.skill.animName.ToString());
+        }
+        else
+        {
+            anim.Play(a.skill.animName.ToString());
+            Debug.Log("not connected");
+        }
+    }
 
+    ActionClass GetAction(KeyCode code)
+    {
+        foreach(var a in allActions)
+        {
+            if(a.code==code)
+            {
+                return a;
+            }
+        }
+        return null;
     }
     void MouseAction()
     {
+        Vector3 mousePos = Input.mousePosition;
+        if (!MouseInView(mousePos)) return;
+
         Ray ray = follow.cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         bool leftDown = Input.GetMouseButtonDown(0);
@@ -117,9 +181,6 @@ public class ActionManager : MonoBehaviourPun
                             }
                         }
                         autoattack = true;
-                        agent.enabled = true;
-                        agent.SetDestination(hit.transform.position);
-                    
                     }
             }
 
@@ -132,14 +193,14 @@ public class ActionManager : MonoBehaviourPun
         if (targetEnemy == null || targetEnemy.isDeath)
         {
             autoattack = false;
-            agent.enabled = false;
             targetEnemy = null;
             return;
         }
         float dist = GetDistance(transform.position, targetEnemy.transform.position);
+        float vel = 0;
+
         if (dist <= meleeAtkDist)
         {
-            agent.SetDestination(transform.position);
             counter -= Time.deltaTime;
             if (counter <= 0)
             {
@@ -153,7 +214,17 @@ public class ActionManager : MonoBehaviourPun
                 targetEnemy.TakeDamage(GetAttackPower());
             }
         }
-        anim.SetFloat("y", agent.velocity.magnitude);
+        else
+        {
+            Vector3 p = targetEnemy.transform.position;
+            transform.position = Vector3.MoveTowards(transform.position, p,
+                autoMoveSpeed * Time.deltaTime);
+            vel = 1;
+            p.y = transform.position.y;
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(p), Time.deltaTime*
+               rotSpeed );
+        }
+        anim.SetFloat("y",vel);
     }
     float GetDistance(Vector3 t1, Vector3 t2)
     {
@@ -166,4 +237,23 @@ public class ActionManager : MonoBehaviourPun
     {
         return 1;
     }
+    
+    bool MouseInView(Vector3 pos)
+    {
+        if (pos.x > 0 && pos.x < screenW && pos.y > 0 && pos.y < screenH) return true;
+
+       return false;
+    }
+
+    public void CompleteAction()
+    {
+        
+    }
+}
+
+[System.Serializable]
+public class ActionClass
+{
+    public KeyCode code;
+    public Skills skill;
 }

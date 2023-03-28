@@ -1,14 +1,14 @@
 fileFormatVersion: 2
-guid: fa9ccddb5938ff44a81ee06e2f6d1a58
+guid: b38fcdbf88f95f2468be0a4ae7aae7f8
 ModelImporter:
-  serializedVersion: 19301
+  serializedVersion: 21300
   internalIDToNameTable:
   - first:
       74: 416870459326255563
     second: tpose
   - first:
-      74: 1688571938728901323
-    second: SpinAttack_TwoWeapons
+      74: 2550410822785019017
+    second: MeeleeAttack_OneHanded
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -20,6 +20,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -67,18 +68,18 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: SpinAttack_TwoWeapons
-      takeName: SpinAttack_TwoWeapons
+      name: MeeleeAttack_OneHanded
+      takeName: MeeleeAttack_OneHanded
       internalID: 0
       firstFrame: 2
-      lastFrame: 47
+      lastFrame: 28
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
@@ -90,11 +91,18 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.54285717
+        functionName: CompleteAction
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+      additiveReferencePoseFrame: 2
     isReadable: 0
   meshes:
     lODScreenPercentages: []
@@ -107,21 +115,27 @@ ModelImporter:
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    nodeNameCollisionStrategy: 0
     fileIdsGeneration: 2
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
     preserveHierarchy: 0
     skinWeightsMode: 0
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
+    optimizeBones: 1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
   tangentSpace:
@@ -578,13 +592,13 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: SpinAttack_TwoWeapons(Clone)
+    - name: MeeleeAttack_OneHanded(Clone)
       parentName: 
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Armature
-      parentName: SpinAttack_TwoWeapons(Clone)
+      parentName: MeeleeAttack_OneHanded(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
@@ -775,12 +789,12 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: jnt_shoulder_R
       parentName: Scapula_R
-      position: {x: -0.12850574, y: -0.016258905, z: 0.04279993}
-      rotation: {x: 0.6558028, y: 0.46923745, z: -0.30153418, w: 0.5087397}
+      position: {x: -0.1324492, y: -0.0028490913, z: 0.06676595}
+      rotation: {x: 0.5924794, y: 0.4163169, z: -0.39824152, w: 0.56307393}
       scale: {x: 1, y: 1, z: 1}
     - name: jnt_shoulderEnd_R
       parentName: jnt_shoulder_R
-      position: {x: -0.09760509, y: -2.1316282e-16, z: 7.851497e-15}
+      position: {x: -0.09760509, y: -2.1316282e-16, z: 6.3682393e-15}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Scapula_L
@@ -905,12 +919,12 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: jnt_shoulder_L
       parentName: Scapula_L
-      position: {x: 0.12850574, y: 0.016258905, z: -0.04279993}
-      rotation: {x: 0.6558028, y: 0.46923745, z: -0.30153418, w: 0.5087397}
+      position: {x: 0.1324492, y: 0.0028490913, z: -0.06676595}
+      rotation: {x: 0.5924794, y: 0.4163169, z: -0.39824152, w: 0.56307393}
       scale: {x: 1, y: 1, z: 1}
     - name: jnt_shoulderEnd_L
       parentName: jnt_shoulder_L
-      position: {x: 0.09760509, y: -7.105427e-17, z: -8.5620394e-15}
+      position: {x: 0.09760509, y: 2.1316282e-16, z: -9.885426e-15}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hip_R
@@ -920,23 +934,23 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: Knee_R
       parentName: Hip_R
-      position: {x: -0.40340132, y: 2.6201264e-15, z: 1.737277e-14}
+      position: {x: -0.40340132, y: 2.5401902e-15, z: 1.7443824e-14}
       rotation: {x: 0, y: 0, z: 0.013608819, w: 0.99990743}
       scale: {x: 1, y: 1, z: 1}
     - name: Ankle_R
       parentName: Knee_R
-      position: {x: -0.45655176, y: 1.3322676e-15, z: 5.286438e-14}
+      position: {x: -0.45655176, y: 1.1368684e-15, z: 5.286438e-14}
       rotation: {x: 0.072271325, y: -0.033610385, z: -0.049135033, w: 0.99560684}
       scale: {x: 1, y: 1, z: 1}
     - name: Toes_R
       parentName: Ankle_R
-      position: {x: -0.103843875, y: 0.14396112, z: 0.0000000044222066}
+      position: {x: -0.103843875, y: 0.14396112, z: 0.0000000044194177}
       rotation: {x: -0.0009220308, y: 0.002468193, z: -0.7016648, w: 0.7125024}
       scale: {x: 1, y: 1, z: 1}
     - name: ToesEnd_R
       parentName: Toes_R
-      position: {x: -0.062128127, y: 1.4654943e-16, z: 6.221409e-11}
-      rotation: {x: 0, y: 5.0069293e-10, z: -0, w: 1}
+      position: {x: -0.062128127, y: 8.8817837e-17, z: 6.2174654e-11}
+      rotation: {x: 0, y: 5.0037635e-10, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hip_L
       parentName: Root_M
@@ -950,18 +964,18 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: Ankle_L
       parentName: Knee_L
-      position: {x: 0.45655176, y: 9.237055e-16, z: -3.0496493e-12}
+      position: {x: 0.45655176, y: 1.0480505e-15, z: -3.0496849e-12}
       rotation: {x: 0.07227133, y: -0.033610385, z: -0.049135037, w: 0.99560684}
       scale: {x: 1, y: 1, z: 1}
     - name: Toes_L
       parentName: Ankle_L
-      position: {x: 0.103843875, y: -0.14396112, z: -0.000000005838627}
+      position: {x: 0.103843875, y: -0.14396112, z: -0.000000005838595}
       rotation: {x: -0.00092203537, y: 0.0024681976, z: -0.7016648, w: 0.7125024}
       scale: {x: 1, y: 1, z: 1}
     - name: ToesEnd_L
       parentName: Toes_L
-      position: {x: 0.062128127, y: -6.217249e-17, z: -7.578198e-11}
-      rotation: {x: 0, y: 6.098852e-10, z: -0, w: 1}
+      position: {x: 0.062128127, y: -1.110223e-16, z: -7.578155e-11}
+      rotation: {x: 0, y: 6.0988176e-10, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     armTwist: 0.5
     foreArmTwist: 0.5
@@ -980,6 +994,8 @@ ModelImporter:
   animationType: 3
   humanoidOversampling: 1
   avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
