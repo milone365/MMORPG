@@ -25,12 +25,12 @@ public class Entity : MonoBehaviourPun, Selectable
     {
         if (isDeath) return;
         hp -= dmg;
-        view.RPC("SyncronizeStat", RpcTarget.All, hp);
+        view.RPC(Helper.sycronizeStat, RpcTarget.All, hp);
         if (hp <= 0)
         {
             if (PhotonNetwork.IsConnected)
             {
-                view.RPC("PlayAnimation", RpcTarget.All, Helper.death);
+                view.RPC(Helper.playAnim, RpcTarget.All, Helper.death);
             }
         }
     }
@@ -54,7 +54,11 @@ public class Entity : MonoBehaviourPun, Selectable
     {
         if (PhotonNetwork.IsConnected)
         {
-            view.RPC("DamageReciver", RpcTarget.MasterClient, dmg);
+            if(view==null)
+            {
+                view = PhotonView.Get(this);
+            }
+            view.RPC(Helper.damageRecieve, RpcTarget.MasterClient, dmg);
         }
         else
         {

@@ -17,5 +17,7 @@ public static class Helper
     public static string death = "death";
     public static string damage = "dmg";
     public static string atk = "atk";
-    
+    public static string playAnim= "PlayAnimation";
+    public static string damageRecieve = "DamageReciver";
+    public static string sycronizeStat = "SyncronizeStat";
 }

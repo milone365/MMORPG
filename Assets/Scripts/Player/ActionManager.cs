@@ -63,7 +63,10 @@ public class ActionManager : MonoBehaviourPun
 
     public void TICK()
     {
-        KeyBoard();
+        if(!player.isDeath)
+        {
+            KeyBoard();
+        }
         MouseAction();
         if (autoattack)
         {
@@ -84,6 +87,8 @@ public class ActionManager : MonoBehaviourPun
     }
     public void OnPressButton(KeyCode code,ActionClass action=null)
     {
+        if (player.isDeath) return;
+
         var a = action;
         if(a==null)
         {
@@ -122,6 +127,10 @@ public class ActionManager : MonoBehaviourPun
         RaycastHit hit;
         bool leftDown = Input.GetMouseButtonDown(0);
         bool rightDown = Input.GetMouseButtonDown(1);
+        if(player.isDeath)
+        {
+            rightDown = false;
+        }
         float scroll = Input.GetAxisRaw(Helper.scroll);
         if (scroll != 0)
         {
@@ -190,10 +199,11 @@ public class ActionManager : MonoBehaviourPun
 
     void AutoAttack()
     {
-        if (targetEnemy == null || targetEnemy.isDeath)
+        if (targetEnemy == null || targetEnemy.isDeath || player.isDeath)
         {
             autoattack = false;
             targetEnemy = null;
+            counter = attackDealy;
             return;
         }
         float dist = GetDistance(transform.position, targetEnemy.transform.position);
@@ -216,14 +226,14 @@ public class ActionManager : MonoBehaviourPun
         }
         else
         {
-            Vector3 p = targetEnemy.transform.position;
-            transform.position = Vector3.MoveTowards(transform.position, p,
+            transform.position = Vector3.MoveTowards(transform.position, targetEnemy.transform.position,
                 autoMoveSpeed * Time.deltaTime);
             vel = 1;
-            p.y = transform.position.y;
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(p), Time.deltaTime*
-               rotSpeed );
         }
+        Vector3 direction = targetEnemy.transform.position - transform.position;
+        direction.y = 0;
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime *
+           rotSpeed);
         anim.SetFloat("y",vel);
     }
     float GetDistance(Vector3 t1, Vector3 t2)

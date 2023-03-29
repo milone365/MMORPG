@@ -17,6 +17,13 @@ public class NetworkPlayer : Entity
     bool lockRot;
     FollowCamera follow;   
     ActionManager actionManager;
+    [SerializeField]
+    LayerMask floor;
+    [SerializeField]
+    float floorDist = 0.25f;
+    float gravityForce = -9.81f;
+    [SerializeField]
+    float weight = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -42,6 +49,13 @@ public class NetworkPlayer : Entity
     void Update()
     {
         if (!photonView.IsMine) return;
+        bool onGround = OnGround();
+        float gravity = 0;
+        if(!OnGround())
+        {
+            gravity = gravityForce * Time.deltaTime * weight;
+        }
+        rb.velocity = new Vector3(rb.velocity.x, gravity, rb.velocity.z);
         Movement(Time.deltaTime);
         actionManager.TICK();
     }
@@ -69,18 +83,39 @@ public class NetworkPlayer : Entity
             float mouseX = Input.GetAxisRaw(Helper.mousex);
             Vector3 rot = follow.transform.eulerAngles;
             follow.transform.rotation = Quaternion.Euler(rot.x, rot.y + mouseX * sensitiv, rot.z);
-            transform.rotation=Quaternion.Lerp(transform.rotation,follow.transform.rotation,2*Time.deltaTime);
+            if(!isDeath && !actionManager.autoattack)
+            {
+                transform.rotation = Quaternion.Lerp(transform.rotation, follow.transform.rotation, 2 * Time.deltaTime);
+            }
         }
 
-        Vector3 move = (transform.right*x) + (transform.forward*y) * delta * velocity * multipler;
-        rb.velocity = new Vector3(move.x, rb.velocity.y, move.z);
-        anim.SetFloat("x", x);
-        anim.SetFloat("y", y);
-        if(x!=0 || y!=0)
+        if(!isDeath)
         {
-            actionManager.autoattack = false;
+            Vector3 move = (transform.right * x) + (transform.forward * y) * delta * velocity * multipler;
+            rb.velocity = new Vector3(move.x, rb.velocity.y, move.z);
+            anim.SetFloat("x", x);
+            anim.SetFloat("y", y);
+            if (x != 0 || y != 0)
+            {
+                actionManager.autoattack = false;
+            }
         }
     }
 
-    
+    bool OnGround()
+    {
+        Vector3 dir = transform.position + (Vector3.down*floorDist);
+        Debug.DrawLine(transform.position,dir,Color.blue);
+        Ray ray = new Ray(transform.position, dir);
+        RaycastHit hit;
+        if(Physics.Raycast(ray,out hit,floor))
+        {
+            if(hit.transform!=null)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+   
 }
