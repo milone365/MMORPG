@@ -27,7 +27,7 @@ public class ActionManager : MonoBehaviourPun
     Animator anim;
     FollowCamera follow;
     float screenH, screenW;
-    PlayerUI playerUi;
+    public PlayerUI playerUi;
     [SerializeField]
     float rotSpeed = 2;
     public List<ActionClass> upActions = new List<ActionClass>()

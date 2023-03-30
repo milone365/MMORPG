@@ -9,6 +9,8 @@ public class WorldController : MonoBehaviour
     public List<Transform> spawnPoints = new List<Transform>();
     [SerializeField]
     Transform deathZone = null;
+    public Transform cemetery;
+
     private void Awake()
     {
         instance = this;

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-
+using System;
 public class Entity : MonoBehaviourPun, Selectable
 {
     public Stats stats=new Stats();
@@ -12,13 +12,39 @@ public class Entity : MonoBehaviourPun, Selectable
     protected LocalUI ui = null;
     public  int hp = 10;
     public bool isDeath=false;
+    public Action onDeathEvent;
+
+
+    [PunRPC]
+    public void Resurrect()
+    {
+        isDeath = false;
+        hp = stats.maxHp;
+        anim.SetBool(Helper.death, false);
+        if(ui!=null)
+        {
+            ui.UpdaBar(hp);
+        }
+    }
+
+    public void Respawn(Vector3 pos)
+    {
+        transform.position = pos;
+        if (PhotonNetwork.IsConnected)
+        {
+            if (view == null)
+            {
+                view = PhotonView.Get(this);
+            }
+            view.RPC(Helper.resurrect, RpcTarget.All);
+        }
+    }
 
     [PunRPC]
     public void PlayAnimation(string s)
     {
         anim.Play(s);
     }
-
 
     [PunRPC]
     public void DamageReciver(int dmg)
@@ -44,6 +70,10 @@ public class Entity : MonoBehaviourPun, Selectable
             hp = 0;
             isDeath = true;
             anim.SetBool(Helper.death, true);
+            if(onDeathEvent!=null)
+            {
+                onDeathEvent.Invoke();
+            }
         }
         if(ui!=null)
             ui.UpdaBar(hp);

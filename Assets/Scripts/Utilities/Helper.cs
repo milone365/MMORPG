@@ -20,4 +20,5 @@ public static class Helper
     public static string playAnim= "PlayAnimation";
     public static string damageRecieve = "DamageReciver";
     public static string sycronizeStat = "SyncronizeStat";
+    public static string resurrect = "Resurrect";
 }

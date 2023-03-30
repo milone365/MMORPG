@@ -43,6 +43,10 @@ public class NetworkPlayer : Entity
         follow = Instantiate(camPref);
         follow.INIT(transform);
         actionManager.INIT(this, anim, follow);
+        onDeathEvent = () =>
+          {
+              actionManager.playerUi.deathPanel.SetActive(true);
+          };
     }
 
     // Update is called once per frame

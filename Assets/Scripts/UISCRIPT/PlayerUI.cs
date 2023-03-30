@@ -10,8 +10,11 @@ public class PlayerUI : MonoBehaviour
     [SerializeField]
     List<ButtonAction> downButtons = new List<ButtonAction>();
     ActionManager actionManager;
+    NetworkPlayer player;
+    public GameObject deathPanel = null;
     public void INIT(NetworkPlayer player,ActionManager actionManager)
     {
+        this.player = player;
         chat.Init(player);
         this.actionManager = actionManager;
         var up = actionManager.upActions;
@@ -26,5 +29,11 @@ public class PlayerUI : MonoBehaviour
             if (i > down.Count - 1) continue;
             downButtons[i].INIT(down[i], actionManager);
         }
+    }
+
+    public void GoToCemetery()
+    {
+        player.Respawn(WorldController.instance.cemetery.position);
+        deathPanel.SetActive(false);
     }
 }
