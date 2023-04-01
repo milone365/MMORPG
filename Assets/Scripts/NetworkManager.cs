@@ -7,12 +7,16 @@ using Photon.Realtime;
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
     public static NetworkManager instance;
-    const string world = "World";
     [SerializeField]
-    GameObject character = null;
-    bool loading = false;
+    GameObject connectPanel = null;
+    const string world = "World";
+    int currentLevel = 1;
+    [SerializeField]
+    GameObject startButton=null;
+    [SerializeField]
+    GameObject player = null;
 
-    private void Start()
+    private void Awake()
     {
         if(instance!=null)
         {
@@ -22,43 +26,37 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
-            PhotonNetwork.ConnectUsingSettings();
         }
+    }
+    void Start()
+    {
+        PhotonNetwork.ConnectUsingSettings();
     }
 
     public override void OnConnectedToMaster()
     {
+        connectPanel.SetActive(false);
         PhotonNetwork.JoinLobby();
     }
 
-    public override void OnJoinedLobby()
+    public override void OnDisconnected(DisconnectCause cause)
     {
-        UIManager.instance.ShowLoading(false);
+        Debug.Log("Disconnected");
     }
 
     public void StartGame()
     {
-        if (loading) return;
-        loading = true;
+        PhotonNetwork.LoadLevel(currentLevel);
         RoomOptions options = new RoomOptions();
         options.MaxPlayers = 20;
         PhotonNetwork.JoinOrCreateRoom(world, options, TypedLobby.Default);
+        startButton.SetActive(false);
+        StartCoroutine(JoinRoomCo());
     }
 
-    public override void OnCreatedRoom()
+    IEnumerator JoinRoomCo()
     {
-        Debug.Log("create room");
-    }
-    public override void OnJoinedRoom()
-    {
-        StartCoroutine(EntryCo());
-    }
-
-    IEnumerator EntryCo()
-    {
-        PhotonNetwork.LoadLevel(1);
         yield return new WaitForSeconds(1);
-        PhotonNetwork.Instantiate(character.name, new Vector3(0, 1, 0), Quaternion.identity);
-        UIManager.instance.CloseStartScreen();
+        PhotonNetwork.Instantiate(player.name, Vector3.zero, Quaternion.identity);
     }
 }

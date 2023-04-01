@@ -2,98 +2,56 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using System;
-public class Entity : MonoBehaviourPun, Selectable
+
+public abstract class Entity : MonoBehaviourPun
 {
-    public Stats stats=new Stats();
-    protected Animator anim;
-    protected PhotonView view;
+    public AnimatorSync sync;
+    public Rigidbody rb;
+    public float moveSpeed = 3;
+    public float moveMultipler = 1;
+    public bool isDeath;
+    public Stats stats = new Stats();
     [SerializeField]
-    protected LocalUI ui = null;
-    public  int hp = 10;
-    public bool isDeath=false;
-    public Action onDeathEvent;
-
-
-    [PunRPC]
-    public void Resurrect()
+    protected int hp = 10;
+    protected PhotonView view;
+    public System.Action OnDeathEvent;
+    void Start()
     {
-        isDeath = false;
-        hp = stats.maxHp;
-        anim.SetBool(Helper.death, false);
-        if(ui!=null)
-        {
-            ui.UpdaBar(hp);
-        }
+        Init();
     }
 
-    public void Respawn(Vector3 pos)
+    // Update is called once per frame
+    void Update()
     {
-        transform.position = pos;
-        if (PhotonNetwork.IsConnected)
-        {
-            if (view == null)
-            {
-                view = PhotonView.Get(this);
-            }
-            view.RPC(Helper.resurrect, RpcTarget.All);
-        }
+        if (photonView.IsMine == false) return;
+        Tick();
     }
 
-    [PunRPC]
-    public void PlayAnimation(string s)
+    public virtual void Init()
     {
-        anim.Play(s);
+        sync = GetComponentInChildren<AnimatorSync>();
+        sync.Init();
+        rb = GetComponent<Rigidbody>();
+        view = PhotonView.Get(this);
     }
 
-    [PunRPC]
-    public void DamageReciver(int dmg)
+    public virtual void Tick()
     {
-        if (isDeath) return;
-        hp -= dmg;
-        view.RPC(Helper.sycronizeStat, RpcTarget.All, hp);
-        if (hp <= 0)
-        {
-            if (PhotonNetwork.IsConnected)
-            {
-                view.RPC(Helper.playAnim, RpcTarget.All, Helper.death);
-            }
-        }
-    }
 
-    [PunRPC]
-    public void SyncronizeStat(int current)
-    {
-        hp = current;
-        if (hp <= 0)
-        {
-            hp = 0;
-            isDeath = true;
-            anim.SetBool(Helper.death, true);
-            if(onDeathEvent!=null)
-            {
-                onDeathEvent.Invoke();
-            }
-        }
-        if(ui!=null)
-            ui.UpdaBar(hp);
     }
-
 
     public void TakeDamage(int dmg)
     {
-        if (PhotonNetwork.IsConnected)
-        {
-            if(view==null)
-            {
-                view = PhotonView.Get(this);
-            }
-            view.RPC(Helper.damageRecieve, RpcTarget.MasterClient, dmg);
-        }
-        else
+        if(!PhotonNetwork.IsConnected)
         {
             DebugDamage(dmg);
         }
+        else
+        {
+            if(view==null) view = PhotonView.Get(this);
+            view.RPC("DealDamage", RpcTarget.MasterClient, dmg);
+        }
+
     }
 
     void DebugDamage(int dmg)
@@ -103,15 +61,30 @@ public class Entity : MonoBehaviourPun, Selectable
         {
             hp = 0;
             isDeath = true;
-            anim.SetBool(Helper.death, true);
-            anim.Play(Helper.death);
+            sync.IsDead(true);
         }
-        
-        if(ui!=null)
-          ui.UpdaBar(hp);
     }
-    public void Select()
-    {
 
+    [PunRPC]
+    public void DealDamage(int dmg)
+    {
+        hp -= dmg;
+        if (hp <= 0)
+        {
+            hp = 0;
+            isDeath = true;
+            sync.IsDead(true);
+            if(OnDeathEvent!=null)
+            {
+                OnDeathEvent.Invoke();
+            }
+        }
+        view.RPC("SyncronizeStat", RpcTarget.All, hp);
+    }
+
+    [PunRPC]
+    public void SyncronizeStat(int hp)
+    {
+        this.hp = hp;
     }
 }

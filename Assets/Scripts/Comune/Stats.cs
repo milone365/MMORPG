@@ -5,8 +5,9 @@ using UnityEngine;
 [System.Serializable]
 public class Stats 
 {
-    public int maxHp=10;
-    public int atk=2;
-    public int def=3;
-    public int energy=5;
+    public int Level = 1;
+    public int maxHp = 1;
+    public int atk = 1;
+    public int def = 1;
+    public int mana = 1;
 }
