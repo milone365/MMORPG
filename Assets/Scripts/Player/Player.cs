@@ -20,6 +20,7 @@ public class Player : Entity
 
         controller = GetComponent<ActionController>();
         controller.sync = sync;
+        controller.Init();
         var f = Resources.Load<CameraFollow>(StaticStrings.follow);
         follow= Instantiate(f, transform.position, transform.rotation);
         follow.Init(transform);

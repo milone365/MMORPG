@@ -8,16 +8,25 @@ public class UIManager : MonoBehaviour
     public Player player { get; set; }
 
     public static UIManager instance;
+
+    public Chat chat;
+    public List<ActionButton> buttons = new List<ActionButton>();
+
     private void Awake()
     {
         instance = this;
     }
-    void Start()
+    
+    public void SetActions(ActionController controller)
     {
-        
+        for(int i=0;i<buttons.Count;i++)
+        {
+            if(i<controller.actions.Count)
+            {
+                buttons[i].SetUpButton(controller, controller.actions[i].key);
+            }
+        }
     }
-
-    // Update is called once per frame
     void Update()
     {
         
