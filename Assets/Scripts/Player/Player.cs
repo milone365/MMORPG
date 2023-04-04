@@ -13,14 +13,21 @@ public class Player : Entity
     [SerializeField]
     float minZoom = 10, maxZoom = 120;
     ActionController controller;
+    const float second = 1;
+    float manaCounter=1;
+    public SaveData data = new SaveData();
     public override void Init()
     {
         base.Init();
         if (!photonView.IsMine) return;
-
+        data = SaveManager.LoadData<SaveData>(data.characterName);
+        if(data==null)
+        {
+            data = new SaveData();
+        }
         controller = GetComponent<ActionController>();
         controller.sync = sync;
-        controller.Init();
+        controller.Init(this);
         var f = Resources.Load<CameraFollow>(StaticStrings.follow);
         follow= Instantiate(f, transform.position, transform.rotation);
         follow.Init(transform);
@@ -35,8 +42,17 @@ public class Player : Entity
     public override void Tick()
     {
         UseCamera();
+        if(controller.mana<stats.mana)
+        {
+            manaCounter -= Time.deltaTime;
+            if(manaCounter<=0)
+            {
+                manaCounter = second;
+                controller.mana += stats.manaXsecond;
+                if (controller.mana > stats.mana) controller.mana = stats.mana;
+            }
+        }
         if (!CanMove()) return;
-
         float x = Input.GetAxisRaw(StaticStrings.horizontal);
         float y = Input.GetAxisRaw(StaticStrings.vertical);
         Vector3 move = (transform.right * x) + (transform.forward * y);

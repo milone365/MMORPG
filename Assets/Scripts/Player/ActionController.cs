@@ -24,9 +24,14 @@ public class ActionController : MonoBehaviour
     };
     public AnimatorSync sync { get; set; }
     bool inAction = false;
-
-    public void Init()
+    Player player;
+    public int mana = 0;
+    public Inventory inventory = new Inventory();
+    public void Init(Player player)
     {
+        this.player = player;
+        mana = player.stats.mana;
+        BuildInventory();
         UIManager.instance.SetActions(this);
     }
     public void Tick(Transform follow,float x,float y)
@@ -71,10 +76,15 @@ public class ActionController : MonoBehaviour
         {
             if(Input.GetKeyDown(item.key))
             {
-                PressButton(item.key,item);
+                PressButton(item);
                 break;
             }
         }
+    }
+   
+    void BuildInventory()
+    {
+        inventory.Init();
     }
 
     void AutoAttack(float delta)
@@ -117,32 +127,20 @@ public class ActionController : MonoBehaviour
         }
     }
 
-    public void PressButton(KeyCode code,ActionClass action=null)
+    public void PressButton(ActionClass action=null)
     {
-        ActionClass current = action;
-        if(current==null)
-        {
-            current = GetAction(code);
-        }
-        Skill skill = current.skill;
+        Skill skill = action.skill;
         if (skill == null) return;
-        //to do... > cost>
-        inAction = true;
-        sync.PlayAnimation(skill.animName.ToString());
-    }
-
-    ActionClass GetAction(KeyCode code)
-    {
-        foreach(var item in actions)
+        if (action.button.Charging()) return;
+        if(skill.cost<=mana)
         {
-            if(item.key==code)
-            {
-                return item;
-            }
+            mana -= skill.cost;
+            //to do... > cost>
+            inAction = true;
+            sync.PlayAnimation(skill.animName.ToString());
+            action.button.SetCountDown();
         }
-        return null;
     }
-
 }
 
 [System.Serializable]
@@ -150,5 +148,5 @@ public class ActionClass
 {
     public KeyCode key;
     public Skill skill;
-    
+    public ActionButton button;
 }

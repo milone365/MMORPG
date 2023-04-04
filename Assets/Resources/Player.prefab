@@ -181,7 +181,8 @@ MonoBehaviour:
     maxHp: 1
     atk: 1
     def: 1
-    mana: 1
+    mana: 100
+    manaXsecond: 5
   hp: 3
   rotSpeed: 2
   scrollAmount: 3
@@ -203,6 +204,44 @@ MonoBehaviour:
   attackRange: 3
   automoveSpeed: 2
   attackDealy: 2
+  actions:
+  - key: 122
+    skill: {fileID: 11400000, guid: 6c91fdd2b68951e42921504e103840e1, type: 2}
+    button: {fileID: 0}
+  - key: 120
+    skill: {fileID: 0}
+    button: {fileID: 0}
+  - key: 99
+    skill: {fileID: 0}
+    button: {fileID: 0}
+  - key: 118
+    skill: {fileID: 0}
+    button: {fileID: 0}
+  - key: 98
+    skill: {fileID: 0}
+    button: {fileID: 0}
+  - key: 110
+    skill: {fileID: 0}
+    button: {fileID: 0}
+  - key: 49
+    skill: {fileID: 0}
+    button: {fileID: 0}
+  - key: 50
+    skill: {fileID: 0}
+    button: {fileID: 0}
+  - key: 51
+    skill: {fileID: 0}
+    button: {fileID: 0}
+  - key: 52
+    skill: {fileID: 0}
+    button: {fileID: 0}
+  - key: 53
+    skill: {fileID: 0}
+    button: {fileID: 0}
+  - key: 54
+    skill: {fileID: 0}
+    button: {fileID: 0}
+  mana: 0
 --- !u!1001 &8460295121995200193
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -789,6 +828,9 @@ MonoBehaviour:
   - Type: 1
     SynchronizeType: 2
     Name: y
+  - Type: 4
+    SynchronizeType: 0
+    Name: dead
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0

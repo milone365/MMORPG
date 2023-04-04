@@ -10,4 +10,18 @@ public class Stats
     public int atk = 1;
     public int def = 1;
     public int mana = 1;
+    public int manaXsecond = 5;
+    public CharacterClass charClass = CharacterClass.warrior;
+}
+
+public enum CharacterClass
+{
+    warrior,
+    mage,
+    priest,
+    paladin,
+    shamano,
+    druid,
+    rogue,
+    ranger
 }
