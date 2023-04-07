@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
     Transform content = null;
     List<GameObject> toDeleteSkills = new List<GameObject>();
     ActionController controller;
+    bool initialized = false;
     private void Awake()
     {
         instance = this;
@@ -35,9 +36,11 @@ public class UIManager : MonoBehaviour
                 controller.actions[i].button = buttons[i];
             }
         }
+        initialized = true;
     }
     void Update()
     {
+        if (!initialized) return;
         foreach(var item in buttons)
         {
             item.FadeCheck();

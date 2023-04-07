@@ -1265,7 +1265,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1312401200, guid: 4c176df3ad4b4454d927eeb09144351c, type: 3}
       propertyPath: inventory.playerSkills.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1312401200, guid: 4c176df3ad4b4454d927eeb09144351c, type: 3}
       propertyPath: inventory.playerSkills.Array.data[0]
@@ -1369,7 +1369,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8354701189602405101, guid: 4c176df3ad4b4454d927eeb09144351c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c176df3ad4b4454d927eeb09144351c, type: 3}
@@ -2390,10 +2390,11 @@ MonoBehaviour:
   isDeath: 0
   stats:
     Level: 1
-    maxHp: 1
-    atk: 1
-    def: 1
-    mana: 1
+    Stamina: 1
+    Strenght: 1
+    Agility: 1
+    Intellect: 1
+    Multipler: 2
     manaXsecond: 5
     charClass: 0
   hp: 10

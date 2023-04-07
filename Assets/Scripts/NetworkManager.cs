@@ -15,6 +15,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     GameObject startButton=null;
     [SerializeField]
     GameObject player = null;
+    [SerializeField]
+    GameObject[] disableOnStart = null;
+    [SerializeField]
+    Animator fadescreen = null;
+    [SerializeField]
+    CharacterCreate create = null;
 
     private void Awake()
     {
@@ -46,7 +52,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
+        foreach(var o in disableOnStart)
+        {
+            o.SetActive(false);
+        }
+        SaveManager.SaveData(CharacterCreate.selectedData.characterName, CharacterCreate.selectedData);
         PhotonNetwork.LoadLevel(currentLevel);
+        fadescreen.Play("FadeOut");
         RoomOptions options = new RoomOptions();
         options.MaxPlayers = 20;
         PhotonNetwork.JoinOrCreateRoom(world, options, TypedLobby.Default);

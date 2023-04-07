@@ -20,7 +20,7 @@ public class Player : Entity
     {
         base.Init();
         if (!photonView.IsMine) return;
-        data = SaveManager.LoadData<SaveData>(data.characterName);
+        data = CharacterCreate.selectedData;
         if(data==null)
         {
             data = new SaveData();
@@ -42,14 +42,14 @@ public class Player : Entity
     public override void Tick()
     {
         UseCamera();
-        if(controller.mana<stats.mana)
+        if(controller.mana<stats.mana())
         {
             manaCounter -= Time.deltaTime;
             if(manaCounter<=0)
             {
                 manaCounter = second;
                 controller.mana += stats.manaXsecond;
-                if (controller.mana > stats.mana) controller.mana = stats.mana;
+                if (controller.mana > stats.mana()) controller.mana = stats.mana();
             }
         }
         if (!CanMove()) return;
@@ -89,7 +89,7 @@ public class Player : Entity
     {
         transform.position = WorldManager.instance.respawnPoint.position;
         isDeath = false;
-        hp = stats.maxHp;
+        hp = stats.maxHp();
         sync.IsDead(false);
         if(Photon.Pun.PhotonNetwork.IsConnected)
         {

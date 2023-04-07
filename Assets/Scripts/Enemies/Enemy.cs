@@ -164,7 +164,7 @@ public class Enemy : Entity
 
     void Respawn()
     {
-        hp = stats.maxHp;
+        hp = stats.maxHp();
         isDeath = false;
         sync.IsDead(false);
         transform.position = startPosition;

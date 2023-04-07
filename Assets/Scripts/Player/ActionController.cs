@@ -30,9 +30,10 @@ public class ActionController : MonoBehaviour
     public void Init(Player player)
     {
         this.player = player;
-        mana = player.stats.mana;
+        mana = player.stats.mana();
         BuildInventory();
         UIManager.instance.SetActions(this);
+        UIManager.instance.chat.SetUP(player.data.characterName);
     }
     public void Tick(Transform follow,float x,float y)
     {

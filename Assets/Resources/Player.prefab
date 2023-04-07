@@ -178,16 +178,32 @@ MonoBehaviour:
   isDeath: 0
   stats:
     Level: 1
-    maxHp: 1
-    atk: 1
-    def: 1
-    mana: 100
+    Stamina: 1
+    Strenght: 1
+    Agility: 1
+    Intellect: 1
+    Multipler: 2
     manaXsecond: 5
+    charClass: 0
   hp: 3
   rotSpeed: 2
   scrollAmount: 3
   minZoom: 10
   maxZoom: 120
+  data:
+    characterName: 
+    stat:
+      Level: 1
+      Stamina: 1
+      Strenght: 1
+      Agility: 1
+      Intellect: 1
+      Multipler: 2
+      manaXsecond: 5
+      charClass: 0
+    skills: []
+    equip: []
+    items: []
 --- !u!114 &1312401200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -242,6 +258,17 @@ MonoBehaviour:
     skill: {fileID: 0}
     button: {fileID: 0}
   mana: 0
+  inventory:
+    playerSkills: []
+    head: {fileID: 0}
+    body: {fileID: 0}
+    leg: {fileID: 0}
+    shoes: {fileID: 0}
+    belt: {fileID: 0}
+    shoulder: {fileID: 0}
+    leftWeapon: {fileID: 0}
+    rightWeapon: {fileID: 0}
+    items: []
 --- !u!1001 &8460295121995200193
 PrefabInstance:
   m_ObjectHideFlags: 0

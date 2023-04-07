@@ -17,4 +17,9 @@ public class CharButton : MonoBehaviour
     {
         create.Select(id);
     }
+
+    public void DeleteCharacter()
+    {
+        create.DeleteCharacter(id);
+    }
 }
