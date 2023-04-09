@@ -15,6 +15,13 @@ public abstract class Entity : MonoBehaviourPun
     protected int hp = 10;
     protected PhotonView view;
     public System.Action OnDeathEvent;
+    public int maxHp;
+    public int maxMana;
+    [SerializeField]
+    protected int hpMultipler = 2;
+    [SerializeField]
+    protected int manaMultipler = 2;
+
     void Start()
     {
         Init();
@@ -86,5 +93,11 @@ public abstract class Entity : MonoBehaviourPun
     public void SyncronizeStat(int hp)
     {
         this.hp = hp;
+    }
+
+    public void CalculateStats(int stamina,int intellect)
+    {
+        maxHp = stamina * hpMultipler;
+        maxMana = intellect * manaMultipler;
     }
 }

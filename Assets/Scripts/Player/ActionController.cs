@@ -30,7 +30,7 @@ public class ActionController : MonoBehaviour
     public void Init(Player player)
     {
         this.player = player;
-        mana = player.stats.mana();
+        mana = player.maxMana;
         BuildInventory();
         UIManager.instance.SetActions(this);
         UIManager.instance.chat.SetUP(player.data.characterName);
@@ -85,7 +85,11 @@ public class ActionController : MonoBehaviour
    
     void BuildInventory()
     {
-        inventory.Init();
+        inventory.Init(player);
+        foreach(var item in inventory.equippedSkill)
+        {
+            actions[item.value].skill = item.key;
+        }
     }
 
     void AutoAttack(float delta)

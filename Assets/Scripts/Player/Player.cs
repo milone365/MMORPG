@@ -16,18 +16,30 @@ public class Player : Entity
     const float second = 1;
     float manaCounter=1;
     public SaveData data = new SaveData();
+    public bool debug = false;
+
     public override void Init()
     {
         base.Init();
         if (!photonView.IsMine) return;
-        data = CharacterCreate.selectedData;
-        if(data==null)
+        
+        if(debug)
         {
-            data = new SaveData();
+            data = SaveManager.LoadData<SaveData>("Debug");
         }
+        else
+        {
+            data = CharacterCreate.selectedData;
+            if (data == null)
+            {
+                data = new SaveData();
+            }
+        }
+
         controller = GetComponent<ActionController>();
         controller.sync = sync;
         controller.Init(this);
+        OnChangeItem();
         var f = Resources.Load<CameraFollow>(StaticStrings.follow);
         follow= Instantiate(f, transform.position, transform.rotation);
         follow.Init(transform);
@@ -42,14 +54,14 @@ public class Player : Entity
     public override void Tick()
     {
         UseCamera();
-        if(controller.mana<stats.mana())
+        if(controller.mana < maxMana)
         {
             manaCounter -= Time.deltaTime;
             if(manaCounter<=0)
             {
                 manaCounter = second;
                 controller.mana += stats.manaXsecond;
-                if (controller.mana > stats.mana()) controller.mana = stats.mana();
+                if (controller.mana > maxMana) controller.mana = maxMana;
             }
         }
         if (!CanMove()) return;
@@ -89,7 +101,7 @@ public class Player : Entity
     {
         transform.position = WorldManager.instance.respawnPoint.position;
         isDeath = false;
-        hp = stats.maxHp();
+        hp = maxHp;
         sync.IsDead(false);
         if(Photon.Pun.PhotonNetwork.IsConnected)
         {
@@ -97,4 +109,10 @@ public class Player : Entity
         }
     }
     
+    public void OnChangeItem()
+    {
+        int stamina = stats.Stamina + controller.inventory.GetParameter(StaticStrings.stamina);
+        int intellect=stats.Intellect+ controller.inventory.GetParameter(StaticStrings.intellect);
+        CalculateStats(stamina,intellect);
+    }
 }

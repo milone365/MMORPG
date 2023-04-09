@@ -6,7 +6,7 @@ public class CharacterStatsUI : MonoBehaviour
 {
     public Text Name = null, Hp = null, Lv = null;
     [SerializeField]
-    Text Atk = null, Def = null, Mana = null,Class=null;
+    Text Atk = null, Def = null,Class=null;
     [SerializeField]
     GameObject[] slots = null;
 
@@ -31,11 +31,10 @@ public class CharacterStatsUI : MonoBehaviour
     }
     public void SetUp(Stats stat)
     {
-        Hp.text = "Hp: " + stat.maxHp();
+        Hp.text = "Stamina: " + stat.Stamina;
         Lv.text = "Lv: " + stat.Level;
         Atk.text = "Strenght: " + stat.Strenght;
         Def.text = "Agility: " + stat.Agility;
-        Mana.text = "Mana: " + stat.mana();
         Class.text = "Class: " + stat.charClass.ToString();
     }
 

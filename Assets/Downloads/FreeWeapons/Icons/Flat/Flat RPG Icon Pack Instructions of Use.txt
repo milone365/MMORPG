@@ -1,0 +1,26 @@
+Thank you for downloading my Icon Pack!
+
+This pack features fully customizable item background which allows you to create
+as many rarities of an item as you like.
+
+To use this simply put the prefab of the icon you want in your scene's Canvas element
+and change the color value from the Inspector of the "Background" element in the prefab.
+In case you want to use the icons without the background, I have included all the elements
+separated in another folder. (If you want to combine the elements yourself, make sure to
+set the size of both the background and the icon to be the exact same to avoid mismatch)
+
+I have also included a variation of the icons in 4 default rarities:
+- Common (Green)
+- Rare (Blue)
+- Epic (Purple)
+- Legendary (Yellow)
+
+These can be found in a separate folder and are not separated by elements in case you 
+only want to use the image for something else and don't care about creating more variations.
+
+Finally, if you want to commission me to make custom UI work for your game you can contact me at: 
+Email: pepoliev@gmail.com
+Fiverr: https://www.fiverr.com/share/mglPQZ
+Discord: Iliev#8285
+
+Stay tuned for more Icon Packs coming!

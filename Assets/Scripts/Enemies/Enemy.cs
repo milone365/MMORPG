@@ -32,6 +32,7 @@ public class Enemy : Entity
     public override void Init()
     {
         base.Init();
+        CalculateStats(stats.Stamina, stats.Intellect);
         timer.StartTimer(wait);
         startPosition = transform.position;
         endPos = transform.position + direction;
@@ -164,7 +165,7 @@ public class Enemy : Entity
 
     void Respawn()
     {
-        hp = stats.maxHp();
+        hp = maxHp;
         isDeath = false;
         sync.IsDead(false);
         transform.position = startPosition;
