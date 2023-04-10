@@ -56,13 +56,18 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             o.SetActive(false);
         }
+        fadescreen.Play("FadeIn");
         SaveManager.SaveData(CharacterCreate.selectedData.characterName, CharacterCreate.selectedData);
         PhotonNetwork.LoadLevel(currentLevel);
-        fadescreen.Play("FadeOut");
         RoomOptions options = new RoomOptions();
         options.MaxPlayers = 20;
         PhotonNetwork.JoinOrCreateRoom(world, options, TypedLobby.Default);
         startButton.SetActive(false);
+        
+    }
+
+    public override void OnJoinedRoom()
+    {
         StartCoroutine(JoinRoomCo());
     }
 
@@ -70,5 +75,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         yield return new WaitForSeconds(1);
         PhotonNetwork.Instantiate(player.name, Vector3.zero, Quaternion.identity);
+        fadescreen.Play("FadeOut");
+    }
+
+    public void ChangeRoom(string LevelName)
+    {
+        
     }
 }

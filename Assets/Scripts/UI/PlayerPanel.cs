@@ -114,7 +114,7 @@ public class PlayerPanel : MonoBehaviour
 
     public void ShowStats()
     {
-        Stats s = player.stats;
+        Stats s = player.stats();
         int stamina, strenght, intellect, agility, armor;
         stamina = GetVal(inventory.GetParameter(StaticStrings.stamina), s.Stamina);
         strenght = GetVal(inventory.GetParameter(StaticStrings.strenght), s.Strenght);

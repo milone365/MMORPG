@@ -32,9 +32,22 @@ public class CharacterCreate : MonoBehaviour
     string[] files;
     private void Start()
     {
-        selectedData = null;
-        files = Directory.GetFiles(location).Where(x=>!x.Contains(".meta")).ToArray();
         dropDown.onValueChanged.AddListener(SelectCharacter);
+        selectedData = null;
+
+        //
+        if(!Directory.Exists(location))
+        {
+            Directory.CreateDirectory(location);
+            startButton.SetActive(false);
+            selectedData = new SaveData();
+            selectedData.stat = GetStat(CharacterClass.warrior);
+            selectedData.characterName = "Guest";
+            stats.SetUp(selectedData);
+            return;
+        }
+        //
+        files = Directory.GetFiles(location).Where(x=>!x.Contains(".meta")).ToArray();
         if(files.Length<1)
         {
             startButton.SetActive(false);
@@ -82,7 +95,7 @@ public class CharacterCreate : MonoBehaviour
         stats.SetUp(selectedData);
     }
 
-    Stats GetStat(CharacterClass cla)
+    public static Stats GetStat(CharacterClass cla)
     {
         Stats newStat = new Stats();
         switch (cla)

@@ -27,6 +27,9 @@ public class ActionController : MonoBehaviour
     Player player;
     public int mana = 0;
     public Inventory inventory = new Inventory();
+    [SerializeField]
+    float interactDistance = 5;
+
     public void Init(Player player)
     {
         this.player = player;
@@ -127,6 +130,16 @@ public class ActionController : MonoBehaviour
                 {
                     autoMove = true;
                     enemyTarget = hit.transform.GetComponent<Enemy>();
+                    return;
+                }
+                Interactable inter = hit.transform.GetComponent<Interactable>();
+                if(inter!=null)
+                {
+                    float dist = Vector3.Distance(transform.position, hit.transform.position);
+                    if(dist<=interactDistance)
+                    {
+                        inter.Interact(player);
+                    }
                 }
             }
         }

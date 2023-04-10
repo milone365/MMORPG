@@ -83,7 +83,7 @@ public class UIManager : MonoBehaviour
     {
         var inventoy = controller.inventory;
         var data = player.data;
-        data.stat = player.stats;
+        data.stat = player.stats();
         data.equip.Clear();
         int index = 0;
         foreach(var item in inventoy.AllEquip())
@@ -131,10 +131,12 @@ public class UIManager : MonoBehaviour
         {
             playerPanel = Instantiate(playerPanelPrefab);
             playerPanel.Init(player,controller.inventory);
+            player.LockPlayer();
         }
         else
         {
             Destroy(playerPanel.gameObject);
+            player.CanMove = true;
         }
     }
 }

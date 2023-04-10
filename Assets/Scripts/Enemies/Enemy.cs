@@ -29,6 +29,7 @@ public class Enemy : Entity
     float attackSpeed = 2;
     [SerializeField]
     float maxDistance = 15;
+    public Stats stats = new Stats();
     public override void Init()
     {
         base.Init();

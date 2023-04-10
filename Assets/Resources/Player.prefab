@@ -176,34 +176,32 @@ MonoBehaviour:
   moveSpeed: 3
   moveMultipler: 100
   isDeath: 0
-  stats:
-    Level: 1
-    Stamina: 1
-    Strenght: 1
-    Agility: 1
-    Intellect: 1
-    Multipler: 2
-    manaXsecond: 5
-    charClass: 0
   hp: 3
+  maxHp: 0
+  maxMana: 0
+  hpMultipler: 2
+  manaMultipler: 2
   rotSpeed: 2
   scrollAmount: 3
   minZoom: 10
   maxZoom: 120
   data:
-    characterName: 
+    characterName: Pippo
     stat:
-      Level: 1
+      Level: 10
       Stamina: 1
       Strenght: 1
       Agility: 1
       Intellect: 1
-      Multipler: 2
-      manaXsecond: 5
+      manaXsecond: 10
       charClass: 0
     skills: []
+    equipSkills: []
     equip: []
     items: []
+  CanMove: 1
+  uiMan: {fileID: 2023339601464910974, guid: 2340294b2fe4c874f80b0cb3e3140909, type: 3}
+  debugClass: 0
 --- !u!114 &1312401200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,7 +220,7 @@ MonoBehaviour:
   attackDealy: 2
   actions:
   - key: 122
-    skill: {fileID: 11400000, guid: 6c91fdd2b68951e42921504e103840e1, type: 2}
+    skill: {fileID: 0}
     button: {fileID: 0}
   - key: 120
     skill: {fileID: 0}
@@ -259,7 +257,9 @@ MonoBehaviour:
     button: {fileID: 0}
   mana: 0
   inventory:
-    playerSkills: []
+    equippedSkill: []
+    skills: []
+    items: []
     head: {fileID: 0}
     body: {fileID: 0}
     leg: {fileID: 0}
@@ -268,7 +268,9 @@ MonoBehaviour:
     shoulder: {fileID: 0}
     leftWeapon: {fileID: 0}
     rightWeapon: {fileID: 0}
-    items: []
+    lastEquip: {fileID: 0}
+    coin: 0
+  interactDistance: 5
 --- !u!1001 &8460295121995200193
 PrefabInstance:
   m_ObjectHideFlags: 0

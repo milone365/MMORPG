@@ -16,26 +16,32 @@ public class Player : Entity
     const float second = 1;
     float manaCounter=1;
     public SaveData data = new SaveData();
-    public bool debug = false;
+    public bool CanMove = true;
+    [SerializeField]
+    GameObject uiMan = null;
+    [SerializeField]
+    CharacterClass debugClass = CharacterClass.warrior;
+    public Stats stats()
+    {
+        return data.stat;
+    }
 
     public override void Init()
     {
         base.Init();
         if (!photonView.IsMine) return;
         
-        if(debug)
+        if (uiMan != null)
         {
-            data = SaveManager.LoadData<SaveData>("Debug");
+            Instantiate(uiMan);
         }
-        else
+        data = CharacterCreate.selectedData;
+        if (data == null)
         {
-            data = CharacterCreate.selectedData;
-            if (data == null)
-            {
-                data = new SaveData();
-            }
+            data = new SaveData();
+            data.stat = CharacterCreate.GetStat(debugClass);
+            data.characterName = "Gustav";
         }
-
         controller = GetComponent<ActionController>();
         controller.sync = sync;
         controller.Init(this);
@@ -53,18 +59,23 @@ public class Player : Entity
 
     public override void Tick()
     {
-        UseCamera();
+        
         if(controller.mana < maxMana)
         {
             manaCounter -= Time.deltaTime;
             if(manaCounter<=0)
             {
                 manaCounter = second;
-                controller.mana += stats.manaXsecond;
+                controller.mana += stats().manaXsecond;
                 if (controller.mana > maxMana) controller.mana = maxMana;
             }
         }
-        if (!CanMove()) return;
+        if(!CanMove)
+        {
+            return;
+        }
+        UseCamera();
+        if (isDeath) return;
         float x = Input.GetAxisRaw(StaticStrings.horizontal);
         float y = Input.GetAxisRaw(StaticStrings.vertical);
         Vector3 move = (transform.right * x) + (transform.forward * y);
@@ -90,13 +101,7 @@ public class Player : Entity
         }
     }
 
-    bool CanMove()
-    {
-        if (isDeath) return false;
-        return true;
-    }
-
-
+    
     public void Respawn()
     {
         transform.position = WorldManager.instance.respawnPoint.position;
@@ -111,8 +116,14 @@ public class Player : Entity
     
     public void OnChangeItem()
     {
-        int stamina = stats.Stamina + controller.inventory.GetParameter(StaticStrings.stamina);
-        int intellect=stats.Intellect+ controller.inventory.GetParameter(StaticStrings.intellect);
+        int stamina = stats().Stamina + controller.inventory.GetParameter(StaticStrings.stamina);
+        int intellect=stats().Intellect+ controller.inventory.GetParameter(StaticStrings.intellect);
         CalculateStats(stamina,intellect);
+    }
+    public void LockPlayer()
+    {
+        CanMove = false;
+        rb.velocity = Vector3.zero;
+        sync.Move(0, 0);
     }
 }
