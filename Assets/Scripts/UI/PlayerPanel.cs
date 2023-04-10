@@ -28,6 +28,14 @@ public class PlayerPanel : MonoBehaviour
     [SerializeField]
     DiffentWriter writer=null;
 
+    [Header("Current Item")]
+    [SerializeField]
+    Text itemStamina = null;
+    [SerializeField]
+    Text itemStrenght = null, itemIntellect = null;
+    [SerializeField]
+    Text itemName=null, itemAgility=null, itemArmor = null;
+
     public void Init(Player p,Inventory inventory)
     {
         player = p;
@@ -45,7 +53,13 @@ public class PlayerPanel : MonoBehaviour
         }
         ShowStats();
     }
-
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            ClosePanel();
+        }
+    }
     public void OnPressButton(int id)
     {
         EquipType t = EquipType.head;
@@ -132,9 +146,23 @@ public class PlayerPanel : MonoBehaviour
                 break;
             }
         }
+        int localStam = 0, localStrenght = 0, localAgility = 0, localIntellect = 0, localArmor = 0;
+
         if(oldEquip!=null)
         {
+            localStam = newEquip.stamina - oldEquip.stamina;
+            localStrenght = newEquip.strenght - oldEquip.strenght;
+            localAgility = newEquip.agility - oldEquip.agility;
+            localIntellect = newEquip.intellect - oldEquip.intellect;
+            localArmor = newEquip.armor - oldEquip.armor;
+            writer.ShowDiffence(localStam, StaticStrings.stamina);
+            writer.ShowDiffence(localStrenght, StaticStrings.strenght);
+            writer.ShowDiffence(localAgility, StaticStrings.agility);
+            writer.ShowDiffence(localIntellect, StaticStrings.intellect);
+            writer.ShowDiffence(localArmor, StaticStrings.armor);
 
+            writer.ShowDiffence(player.hpMultipler * localStam, StaticStrings.hp);
+            writer.ShowDiffence(player.manaMultipler * localIntellect, StaticStrings.mana);
         }
         else
         {
@@ -143,9 +171,22 @@ public class PlayerPanel : MonoBehaviour
             writer.ShowDiffence(newEquip.agility, StaticStrings.agility);
             writer.ShowDiffence(newEquip.intellect, StaticStrings.intellect);
             writer.ShowDiffence(newEquip.armor, StaticStrings.armor);
-            writer.ShowDiffence(newEquip.stamina*player.hpMultipler, StaticStrings.hp);
-            writer.ShowDiffence(newEquip.intellect * player.manaMultipler, StaticStrings.mana);
+            
+            writer.ShowDiffence(player.hpMultipler* newEquip.stamina, StaticStrings.hp);
+            writer.ShowDiffence(player.manaMultipler* newEquip.intellect, StaticStrings.mana);
         }
+
+        ShowCurrentItem(newEquip);
+    }
+
+    void ShowCurrentItem(Equip e)
+    {
+        itemName.text = e.name;
+        itemStamina.text = "Stamina: " + e.stamina;
+        itemStrenght.text = "Strenght: " + e.strenght;
+        itemAgility.text = "Agility: " + e.agility;
+        itemIntellect.text = "intellect: " + e.intellect;
+        itemArmor.text = "Armor: " + e.armor;
     }
 
     int GetVal(params int[] values)
@@ -156,5 +197,11 @@ public class PlayerPanel : MonoBehaviour
             total += v;
         }
         return total;
+    }
+    
+    public void ClosePanel()
+    {
+        player.CanMove = true;
+        Destroy(gameObject);
     }
 }

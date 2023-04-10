@@ -17,10 +17,8 @@ public abstract class Entity : MonoBehaviourPun
     public System.Action OnDeathEvent;
     public int maxHp;
     public int maxMana;
-    [SerializeField]
-    protected int hpMultipler = 2;
-    [SerializeField]
-    protected int manaMultipler = 2;
+    public int hpMultipler = 2;
+    public int manaMultipler = 2;
 
     void Start()
     {
