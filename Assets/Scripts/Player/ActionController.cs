@@ -29,6 +29,12 @@ public class ActionController : MonoBehaviour
     public Inventory inventory = new Inventory();
     [SerializeField]
     float interactDistance = 5;
+    [SerializeField]
+    Texture2D[] cursorList = null;
+    enum Cursors
+    {
+        normal,atk,pik,bag,teleport
+    }
 
     public void Init(Player player)
     {
@@ -157,6 +163,24 @@ public class ActionController : MonoBehaviour
             inAction = true;
             sync.PlayAnimation(skill.animName.ToString());
             action.button.SetCountDown();
+        }
+    }
+
+    public void MouseLeft()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit))
+        {
+            switch(hit.transform.tag)
+            {
+                case StaticStrings.enemy:
+                    Cursor.SetCursor(cursorList[(int)Cursors.atk], Vector2.zero, CursorMode.Auto);
+                    break;
+                case StaticStrings.teleport:
+                    Cursor.SetCursor(cursorList[(int)Cursors.teleport], Vector2.zero, CursorMode.Auto);
+                    break;
+            }
         }
     }
 }

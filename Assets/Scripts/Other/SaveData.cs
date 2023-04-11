@@ -11,4 +11,7 @@ public class SaveData
     public List<Pair<string, int>> equipSkills = new List<Pair<string, int>>();
     public List<Pair<string, int>> equip = new List<Pair<string, int>>();
     public List<string> items = new List<string>();
+    public string LevelName = "Level1";
+    public int currentLevel = 1;
+    public float x, y, z;
 }

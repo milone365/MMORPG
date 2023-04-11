@@ -2,23 +2,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using System.Linq;
 public class Teleport : MonoBehaviour, Interactable
 {
     [SerializeField]
-    string LevelName = "Test2";
+    Levels level = Levels.Level1;
     bool interacting = false;
+    
+   
     public void Interact(Player p = null)
     {
         if (interacting) return;
         interacting = true;
         if(NetworkManager.instance!=null)
         {
-            NetworkManager.instance.ChangeRoom(LevelName);
+            StartCoroutine(ChangeSceneCo(p));
         }
         else
         {
-            SceneManager.LoadScene(LevelName);
+            SceneManager.LoadScene(level.ToString());
         }
     }
+
+    IEnumerator ChangeSceneCo(Player p)
+    {
+        p.data.LevelName = level.ToString();
+        p.data.currentLevel = (int)level;
+        SaveManager.SaveData<SaveData>(p.data.characterName, p.data);
+        WorldManager.instance.playerList.Remove(p.transform);
+        NetworkManager.instance.fadescreen.Play("FadeIn");
+        yield return new WaitForSeconds(1.5f);
+        NetworkManager.instance.ChangeRoom(level);
+    }
+}
+
+public enum Levels
+{
+    LogIn,
+    Level1,
+    Level2
 }

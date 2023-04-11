@@ -130,18 +130,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2071255587, guid: 4c176df3ad4b4454d927eeb09144351c, type: 3}
-      propertyPath: debug
-      value: 0
+    - target: {fileID: 1312401200, guid: 4c176df3ad4b4454d927eeb09144351c, type: 3}
+      propertyPath: cursorList.Array.size
+      value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 2071255587, guid: 4c176df3ad4b4454d927eeb09144351c, type: 3}
-      propertyPath: uiMan
+    - target: {fileID: 1312401200, guid: 4c176df3ad4b4454d927eeb09144351c, type: 3}
+      propertyPath: cursorList.Array.data[0]
       value: 
-      objectReference: {fileID: 2023339601464910974, guid: 2340294b2fe4c874f80b0cb3e3140909, type: 3}
-    - target: {fileID: 2071255587, guid: 4c176df3ad4b4454d927eeb09144351c, type: 3}
-      propertyPath: uimanager
+      objectReference: {fileID: 2800000, guid: 2e71a8202d3b4a3448ec85ced5a40265, type: 3}
+    - target: {fileID: 1312401200, guid: 4c176df3ad4b4454d927eeb09144351c, type: 3}
+      propertyPath: cursorList.Array.data[1]
       value: 
-      objectReference: {fileID: 2023339601464910975, guid: 2340294b2fe4c874f80b0cb3e3140909, type: 3}
+      objectReference: {fileID: 2800000, guid: 2d18e23e3ce249b4489b8bcdd02d3f48, type: 3}
+    - target: {fileID: 1312401200, guid: 4c176df3ad4b4454d927eeb09144351c, type: 3}
+      propertyPath: cursorList.Array.data[2]
+      value: 
+      objectReference: {fileID: 2800000, guid: b23a0084fea403945a302e12cc707439, type: 3}
+    - target: {fileID: 1312401200, guid: 4c176df3ad4b4454d927eeb09144351c, type: 3}
+      propertyPath: cursorList.Array.data[3]
+      value: 
+      objectReference: {fileID: 2800000, guid: f8c873f1e53e83f4aabf342d6be1dfc3, type: 3}
+    - target: {fileID: 1312401200, guid: 4c176df3ad4b4454d927eeb09144351c, type: 3}
+      propertyPath: cursorList.Array.data[4]
+      value: 
+      objectReference: {fileID: 2800000, guid: 1e1ecf843f705b34ab304dff88b037c1, type: 3}
     - target: {fileID: 1521751341792960039, guid: 4c176df3ad4b4454d927eeb09144351c, type: 3}
       propertyPath: sceneViewId
       value: 2
@@ -200,7 +212,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8354701189602405101, guid: 4c176df3ad4b4454d927eeb09144351c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c176df3ad4b4454d927eeb09144351c, type: 3}
@@ -416,7 +428,7 @@ GameObject:
   - component: {fileID: 536270886}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: teleport
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -433,7 +445,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9d7b77eba36fcf4eae4882d6d228b14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LevelName: Test
+  level: 2
 --- !u!65 &536270887
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -735,6 +747,7 @@ MonoBehaviour:
   respawnPoint: {fileID: 696768077}
   playerList: []
   deathZone: {x: 0, y: -10, z: 0}
+  levelList: []
 --- !u!4 &1148530694
 Transform:
   m_ObjectHideFlags: 0
@@ -872,7 +885,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 28eadf88e5b3a83469a5e7a41ec1f1a7, type: 2}
+  - {fileID: 2100000, guid: ee7b6025fa0482941877f5612f8758e6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

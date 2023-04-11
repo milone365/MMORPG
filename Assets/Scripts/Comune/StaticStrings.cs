@@ -4,21 +4,21 @@ using UnityEngine;
 
 public static class StaticStrings 
 {
-    public static string vertical = "Vertical";
-    public static string scroll = "Mouse ScrollWheel";
-    public static string mouseX = "Mouse X";
-    public static string horizontal = "Horizontal";
-    public static string player = "Player";
-    public static string enemy = "Enemy";
-    public static string follow= "CameraFollow";
-    public static string move = "move";
-    public static string dead = "dead";
+    public const string vertical = "Vertical";
+    public const string scroll = "Mouse ScrollWheel";
+    public const string mouseX = "Mouse X";
+    public const string horizontal = "Horizontal";
+    public const string player = "Player";
+    public const string enemy = "Enemy";
+    public const string follow= "CameraFollow";
+    public const string move = "move";
+    public const string dead = "dead";
     public const string stamina = "stamina", strenght = "strenght";
     public const string intellect="intellect", agility="agility";
     public const string armor="armor";
     public const string hp = "hp";
     public const string mana = "mana";
-
+    public const string teleport = "teleport";
 }
 
 public static class Helper

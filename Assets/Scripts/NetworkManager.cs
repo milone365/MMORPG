@@ -9,7 +9,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public static NetworkManager instance;
     [SerializeField]
     GameObject connectPanel = null;
-    const string world = "World";
+    string world = "World";
     int currentLevel = 1;
     [SerializeField]
     GameObject startButton=null;
@@ -17,10 +17,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     GameObject player = null;
     [SerializeField]
     GameObject[] disableOnStart = null;
-    [SerializeField]
-    Animator fadescreen = null;
+    public Animator fadescreen = null;
     [SerializeField]
     CharacterCreate create = null;
+    System.Action OnChangeLevel;
 
     private void Awake()
     {
@@ -56,8 +56,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             o.SetActive(false);
         }
+        var data = CharacterCreate.selectedData;
+        currentLevel = data.currentLevel;
+        world = data.LevelName;
         fadescreen.Play("FadeIn");
-        SaveManager.SaveData(CharacterCreate.selectedData.characterName, CharacterCreate.selectedData);
+        SaveManager.SaveData(data.characterName, data);
         PhotonNetwork.LoadLevel(currentLevel);
         RoomOptions options = new RoomOptions();
         options.MaxPlayers = 20;
@@ -74,12 +77,38 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     IEnumerator JoinRoomCo()
     {
         yield return new WaitForSeconds(1);
-        PhotonNetwork.Instantiate(player.name, Vector3.zero, Quaternion.identity);
+        var playerObj= PhotonNetwork.Instantiate(player.name, Vector3.zero, Quaternion.identity);
         fadescreen.Play("FadeOut");
+        var data = CharacterCreate.selectedData;
+        if(data!=null)
+        {
+            playerObj.transform.position = new Vector3(data.x, data.y, data.z);
+        }
     }
 
-    public void ChangeRoom(string LevelName)
+    public override void OnJoinedLobby()
     {
-        
+        if(OnChangeLevel!=null)
+        {
+            OnChangeLevel.Invoke();
+        }
+    }
+
+    public void ChangeRoom(Levels level)
+    {
+        currentLevel = (int)level;
+        world = level.ToString();
+        if (OnChangeLevel==null)
+        {
+            OnChangeLevel = () =>
+            {
+                PhotonNetwork.LoadLevel(currentLevel);
+                RoomOptions options = new RoomOptions();
+                options.MaxPlayers = 20;
+                PhotonNetwork.JoinOrCreateRoom(world, options, TypedLobby.Default);
+            };
+        }
+        PhotonNetwork.LeaveRoom();
+        PhotonNetwork.ConnectUsingSettings();
     }
 }

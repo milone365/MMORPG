@@ -199,6 +199,11 @@ MonoBehaviour:
     equipSkills: []
     equip: []
     items: []
+    LevelName: Level1
+    currentLevel: 1
+    x: 0
+    y: 0
+    z: 0
   CanMove: 1
   uiMan: {fileID: 2023339601464910974, guid: 2340294b2fe4c874f80b0cb3e3140909, type: 3}
   debugClass: 0

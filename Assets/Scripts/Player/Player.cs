@@ -70,6 +70,7 @@ public class Player : Entity
                 if (controller.mana > maxMana) controller.mana = maxMana;
             }
         }
+        controller.MouseLeft();
         if(!CanMove)
         {
             return;
@@ -88,16 +89,20 @@ public class Player : Entity
 
     void UseCamera()
     {
-        float x = Input.GetAxisRaw(StaticStrings.mouseX);
         float scroll = Input.GetAxisRaw(StaticStrings.scroll);
-        Vector3 rot = follow.transform.rotation.eulerAngles;
-        follow.transform.rotation = Quaternion.Euler(rot.x, rot.y + x * rotSpeed, rot.z);
-        if(scroll!=0)
+        if (scroll != 0)
         {
             float val = scrollAmount * scroll;
             val += follow.cam.fieldOfView;
             val = Mathf.Clamp(val, minZoom, maxZoom);
             follow.cam.fieldOfView = val;
+        }
+        if(Input.GetMouseButton(0))
+        {
+            float x = Input.GetAxisRaw(StaticStrings.mouseX);
+            Vector3 rot = follow.transform.rotation.eulerAngles;
+            follow.transform.rotation = Quaternion.Euler(rot.x, rot.y + x * rotSpeed, rot.z);
+
         }
     }
 

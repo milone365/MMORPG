@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class UIManager : MonoBehaviour
 {
     public GameObject deathPanel = null;
@@ -83,6 +83,12 @@ public class UIManager : MonoBehaviour
     {
         var inventoy = controller.inventory;
         var data = player.data;
+        var level = SceneManager.GetActiveScene();
+        data.currentLevel = level.buildIndex;
+        data.LevelName = level.name;
+        data.x = player.transform.position.x;
+        data.y = player.transform.position.y;
+        data.z = player.transform.position.z;
         data.stat = player.stats();
         data.equip.Clear();
         int index = 0;
