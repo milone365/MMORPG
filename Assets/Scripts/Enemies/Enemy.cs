@@ -178,6 +178,7 @@ public class Enemy : Entity
         hp = maxHp;
         sync.IsDead(false);
         transform.position = startPosition;
+        UpdateUI(hp, maxHp);
     }
 
     private void OnDrawGizmos()

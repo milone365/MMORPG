@@ -21,6 +21,12 @@ public static class StaticStrings
     public const string teleport = "teleport";
 }
 
+public static class Effects
+{
+    public const string healing = "Heal";
+
+}
+
 public static class Helper
 {
     public static Color GetColor(Rarety rare)

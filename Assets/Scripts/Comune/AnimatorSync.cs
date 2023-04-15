@@ -7,6 +7,7 @@ public class AnimatorSync : MonoBehaviourPun
 {
     Animator anim;
     PhotonView view;
+    public System.Action OnEndAnimationEvent = null;
     public void Init()
     {
         anim = GetComponent<Animator>();
@@ -44,6 +45,14 @@ public class AnimatorSync : MonoBehaviourPun
         else
         {
             anim.Play(animName);
+        }
+    }
+
+    public void OnEndAnimation()
+    {
+        if(OnEndAnimationEvent!=null)
+        {
+            OnEndAnimationEvent.Invoke();
         }
     }
 }

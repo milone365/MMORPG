@@ -14,12 +14,14 @@ public class Healing : Spell
         {
             case SpellTarget.self:
                 owner.Healing(power);
+                WorldManager.instance.SpawnEffect(Effects.healing, owner.transform.position, Vector3.zero);
                 break;
             case SpellTarget.friend:
                 if (target == null) return;
                 if(!target.isDeath())
                 {
                     target.Healing(power);
+                    WorldManager.instance.SpawnEffect(Effects.healing, target.transform.position, Vector3.zero);
                 }
                 break;
             case SpellTarget.friendsArea:
@@ -28,7 +30,9 @@ public class Healing : Spell
                 {
                     if(c.tag==StaticStrings.player)
                     {
+                        var Player = c.GetComponent<Player>();
                         c.GetComponent<Player>().Healing(power);
+                        WorldManager.instance.SpawnEffect(Effects.healing, c.transform.position, Vector3.zero);
                     }
                 }    
                 break;

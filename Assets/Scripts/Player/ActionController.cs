@@ -35,7 +35,9 @@ public class ActionController : MonoBehaviour
     {
         normal,atk,pik,bag,teleport
     }
-    Entity target;    
+    Entity target;
+    public Skill currentSkill=null;
+
     public void Init(Player player)
     {
         this.player = player;
@@ -43,6 +45,7 @@ public class ActionController : MonoBehaviour
         BuildInventory();
         UIManager.instance.SetActions(this);
         UIManager.instance.chat.SetUP(player.data.characterName);
+        sync.OnEndAnimationEvent += SpawnSpell;
     }
     public void Tick(Transform follow,float x,float y)
     {
@@ -156,10 +159,12 @@ public class ActionController : MonoBehaviour
         Skill skill = action.skill;
         if (skill == null) return;
         if (action.button.Charging()) return;
-        
+        if (!CanUseSpell(skill)) return;
+
         if(skill.cost<=mana)
         {
             mana -= skill.cost;
+            currentSkill = skill;
             //to do... > cost>
             inAction = true;
             sync.PlayAnimation(skill.animName.ToString());
@@ -218,6 +223,36 @@ public class ActionController : MonoBehaviour
             target = e;
             target.ShowMarker(true);
         }
+    }
+
+    bool CanUseSpell(Skill skill)
+    {
+        switch (skill.spellTarget)
+        {
+            case SpellTarget.self:
+                break;
+            case SpellTarget.friend:
+                if (target == null) return false;
+                if(target is Enemy) return false;
+                break;
+            case SpellTarget.enemy:
+                if (target == null) return false;
+                if (target is Player) return false;
+                break;
+            case SpellTarget.friendsArea:
+                break;
+            case SpellTarget.enemiesArea:
+                break;
+        }
+        return true;
+    }
+
+    public void SpawnSpell()
+    {
+        if (currentSkill == null) return;
+        if (currentSkill.spellPrefab == null) return;
+        var spell = Instantiate(currentSkill.spellPrefab);
+        spell.Initialize(currentSkill, player, target);
     }
 }
 
