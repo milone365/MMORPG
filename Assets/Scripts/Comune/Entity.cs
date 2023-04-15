@@ -9,7 +9,11 @@ public abstract class Entity : MonoBehaviourPun
     public Rigidbody rb;
     public float moveSpeed = 3;
     public float moveMultipler = 1;
-    public bool isDeath;
+    public bool isDeath()
+    {
+        return (hp <= 0);
+    }
+    
     [SerializeField]
     protected int hp = 10;
     protected PhotonView view;
@@ -18,19 +22,25 @@ public abstract class Entity : MonoBehaviourPun
     public int maxMana;
     public int hpMultipler = 2;
     public int manaMultipler = 2;
+    [SerializeField]
+    protected GameObject localUI = null;
+    [SerializeField]
+    protected UnityEngine.UI.Text nameText = null;
+    [SerializeField]
+    protected UnityEngine.UI.Slider localhpBar = null;
+    [SerializeField]
+    GameObject circle = null;
 
     void Start()
     {
         Init();
     }
-
     // Update is called once per frame
     void Update()
     {
         if (photonView.IsMine == false) return;
         Tick();
     }
-
     public virtual void Init()
     {
         sync = GetComponentInChildren<AnimatorSync>();
@@ -38,12 +48,10 @@ public abstract class Entity : MonoBehaviourPun
         rb = GetComponent<Rigidbody>();
         view = PhotonView.Get(this);
     }
-
     public virtual void Tick()
     {
 
     }
-
     public void TakeDamage(int dmg)
     {
         if(!PhotonNetwork.IsConnected)
@@ -53,48 +61,71 @@ public abstract class Entity : MonoBehaviourPun
         else
         {
             if(view==null) view = PhotonView.Get(this);
-            view.RPC("DealDamage", RpcTarget.MasterClient, dmg);
+            view.RPC("DealDamage", RpcTarget.All, dmg);
         }
 
     }
-
     void DebugDamage(int dmg)
     {
-        hp -= dmg;
-        if (hp <= 0)
+        if(photonView.IsMine)
         {
-            hp = 0;
-            isDeath = true;
-            sync.IsDead(true);
+            hp -= dmg;
+            if (hp <= 0)
+            {
+                hp = 0;
+                sync.IsDead(true);
+                if (OnDeathEvent != null)
+                {
+                    OnDeathEvent.Invoke();
+                }
+            }
+            UpdateUI(hp,maxHp);
         }
     }
-
     [PunRPC]
     public void DealDamage(int dmg)
     {
-        hp -= dmg;
-        if (hp <= 0)
+        if(photonView.IsMine)
         {
-            hp = 0;
-            isDeath = true;
-            sync.IsDead(true);
-            if(OnDeathEvent!=null)
+            hp -= dmg;
+            if (hp <= 0)
             {
-                OnDeathEvent.Invoke();
+                hp = 0;
+                sync.IsDead(true);
+                if (OnDeathEvent != null)
+                {
+                    OnDeathEvent.Invoke();
+                }
             }
+            view.RPC("SyncronizeStat", RpcTarget.All, hp,maxHp);
         }
-        view.RPC("SyncronizeStat", RpcTarget.All, hp);
     }
-
     [PunRPC]
-    public void SyncronizeStat(int hp)
+    public void SyncronizeStat(int hp,int max)
     {
         this.hp = hp;
+        this.maxHp = max;
+        UpdateUI(this.hp,max);
     }
-
     public void CalculateStats(int stamina,int intellect)
     {
         maxHp = stamina * hpMultipler;
         maxMana = intellect * manaMultipler;
+    }
+    public virtual void UpdateUI(int hp,int maxHp)
+    {
+        
+    }
+    public virtual void Healing(int heal)
+    {
+
+    }
+
+    public void ShowMarker(bool val)
+    {
+        if(circle!=null)
+        {
+            circle.SetActive(val);
+        }
     }
 }

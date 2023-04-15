@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Photon.Pun;
 
 public class Player : Entity
 {
@@ -21,6 +21,10 @@ public class Player : Entity
     GameObject uiMan = null;
     [SerializeField]
     CharacterClass debugClass = CharacterClass.warrior;
+    public Inventory GetInventory()
+    {
+        return controller.inventory;
+    }
     public Stats stats()
     {
         return data.stat;
@@ -30,7 +34,7 @@ public class Player : Entity
     {
         base.Init();
         if (!photonView.IsMine) return;
-        
+
         if (uiMan != null)
         {
             Instantiate(uiMan);
@@ -46,20 +50,29 @@ public class Player : Entity
         controller.sync = sync;
         controller.Init(this);
         OnChangeItem();
+        hp = maxHp;
         var f = Resources.Load<CameraFollow>(StaticStrings.follow);
         follow= Instantiate(f, transform.position, transform.rotation);
         follow.Init(transform);
         WorldManager.instance.playerList.Add(transform);
-        UIManager.instance.player = this;
+        UIManager.instance.SetUpPlayer(this);
         OnDeathEvent = () =>
           {
               UIManager.instance.deathPanel.SetActive(true);
           };
+        if (view == null)
+        {
+            view = PhotonView.Get(this);
+        }
+        if(Photon.Pun.PhotonNetwork.IsConnected)
+        {
+            view.RPC("LocalBarUpdate", RpcTarget.AllBuffered, data.characterName, hp, maxHp);
+        }
+        localUI.SetActive(false);
     }
 
     public override void Tick()
     {
-        
         if(controller.mana < maxMana)
         {
             manaCounter -= Time.deltaTime;
@@ -68,6 +81,7 @@ public class Player : Entity
                 manaCounter = second;
                 controller.mana += stats().manaXsecond;
                 if (controller.mana > maxMana) controller.mana = maxMana;
+                UIManager.instance.UpdateMana(controller.mana, maxMana);
             }
         }
         controller.MouseLeft();
@@ -76,7 +90,7 @@ public class Player : Entity
             return;
         }
         UseCamera();
-        if (isDeath) return;
+        if (isDeath()) return;
         float x = Input.GetAxisRaw(StaticStrings.horizontal);
         float y = Input.GetAxisRaw(StaticStrings.vertical);
         Vector3 move = (transform.right * x) + (transform.forward * y);
@@ -110,13 +124,14 @@ public class Player : Entity
     public void Respawn()
     {
         transform.position = WorldManager.instance.respawnPoint.position;
-        isDeath = false;
         hp = maxHp;
         sync.IsDead(false);
+        UIManager.instance.UpdateHP(hp, maxHp);
         if(Photon.Pun.PhotonNetwork.IsConnected)
         {
-            view.RPC("SyncronizeStat", Photon.Pun.RpcTarget.All, hp);
+            view.RPC("SyncronizeStat", Photon.Pun.RpcTarget.All, hp,maxHp);
         }
+
     }
     
     public void OnChangeItem()
@@ -124,11 +139,53 @@ public class Player : Entity
         int stamina = stats().Stamina + controller.inventory.GetParameter(StaticStrings.stamina);
         int intellect=stats().Intellect+ controller.inventory.GetParameter(StaticStrings.intellect);
         CalculateStats(stamina,intellect);
+        if(hp>maxHp)
+        {
+            hp = maxHp;
+        }
+        if(controller.mana>maxHp)
+        {
+            controller.mana = maxMana;
+        }
     }
     public void LockPlayer()
     {
         CanMove = false;
         rb.velocity = Vector3.zero;
         sync.Move(0, 0);
+    }
+    public override void UpdateUI(int current,int max)
+    {
+        if (photonView.IsMine)
+        {
+            UIManager.instance.UpdateHP(current, max);
+            if(view==null)
+            {
+                view = PhotonView.Get(this);
+            }
+            if (Photon.Pun.PhotonNetwork.IsConnected)
+                view.RPC("LocalBarUpdate", RpcTarget.All,data.characterName,hp,maxHp);
+        }
+    }
+
+    [PunRPC]
+    public void LocalBarUpdate(string Name,int h,int m)
+    {
+        nameText.text = Name;
+        localhpBar.maxValue = m;
+        localhpBar.value = h;
+    }
+
+    public override void Healing(int heal)
+    {
+        if (isDeath()) return;
+        hp += heal;
+        if (hp > maxHp) hp = maxHp;
+        if (view == null)
+        {
+            view = PhotonView.Get(this);
+        }
+        if (Photon.Pun.PhotonNetwork.IsConnected)
+            view.RPC("SyncronizeStat", RpcTarget.All, hp, maxHp);
     }
 }

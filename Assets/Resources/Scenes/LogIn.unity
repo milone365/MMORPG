@@ -1906,6 +1906,8 @@ MonoBehaviour:
   - {fileID: 476648133}
   fadescreen: {fileID: 441179548}
   create: {fileID: 476648134}
+  prefabList:
+  - {fileID: 7605956112884448060, guid: bf911882ececaa940a5ab454cf5f03bc, type: 3}
 --- !u!4 &1045098116
 Transform:
   m_ObjectHideFlags: 0

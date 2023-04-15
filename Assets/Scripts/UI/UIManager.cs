@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public GameObject deathPanel = null;
@@ -25,6 +26,12 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     PlayerPanel playerPanelPrefab = null;
     PlayerPanel playerPanel;
+    [SerializeField]
+    Slider hpBar = null, manaBar = null;
+    [SerializeField]
+    Text playerName = null, level = null;
+    //photo
+
     private void Awake()
     {
         instance = this;
@@ -144,5 +151,26 @@ public class UIManager : MonoBehaviour
             Destroy(playerPanel.gameObject);
             player.CanMove = true;
         }
+    }
+
+    
+    public void SetUpPlayer(Player player)
+    {
+        this.player = player;
+        UpdateHP(player.maxHp, player.maxHp);
+        UpdateMana(player.maxMana, player.maxMana);
+        playerName.text = player.data.characterName;
+        level.text = "LV: " + player.data.stat.Level;
+    }
+
+    public void UpdateHP(int current, int max)
+    {
+        hpBar.maxValue = max;
+        hpBar.value = current;
+    }
+    public void UpdateMana(int current, int max)
+    {
+        manaBar.maxValue = max;
+        manaBar.value = current;
     }
 }

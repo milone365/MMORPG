@@ -34,7 +34,12 @@ public class CharacterCreate : MonoBehaviour
     {
         dropDown.onValueChanged.AddListener(SelectCharacter);
         selectedData = null;
-
+        field.onSubmit.AddListener(delegate
+        {
+            selectedData.characterName = field.text;
+            stats.SetUp(selectedData);
+        }
+        );
         //
         if(!Directory.Exists(location))
         {

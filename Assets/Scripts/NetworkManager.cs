@@ -111,4 +111,5 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();
         PhotonNetwork.ConnectUsingSettings();
     }
+
 }

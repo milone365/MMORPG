@@ -10,6 +10,19 @@ public class Skill : ScriptableObject
     public int cost = 2;
     public float countDown = 3;
     public float activationTime = 5;
+    public SpellTarget spellTarget=SpellTarget.enemy;
+    public int spellPower = 1;
+    public float radius = 5;
+    public Spell spellPrefab = null;
+}
+
+public enum SpellTarget
+{
+    self,
+    friend,
+    enemy,
+    friendsArea,
+    enemiesArea
 }
 
 public enum AnimName

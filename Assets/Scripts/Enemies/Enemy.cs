@@ -5,6 +5,8 @@ using UnityEngine;
 public class Enemy : Entity
 {
     [SerializeField]
+    string EnemyName = "Skeleton";
+    [SerializeField]
     EnemyState estate = EnemyState.idle;
     Timer timer = new Timer();
     float delta;
@@ -30,6 +32,7 @@ public class Enemy : Entity
     [SerializeField]
     float maxDistance = 15;
     public Stats stats = new Stats();
+
     public override void Init()
     {
         base.Init();
@@ -42,9 +45,15 @@ public class Enemy : Entity
           {
               Invoke("Respawn",respawnTime);
           };
+        hp = maxHp;
+        if(localUI!=null)
+        {
+            nameText.text =EnemyName;
+        }
     }
     public override void Tick()
     {
+        if (isDeath()) return;
         delta = Time.deltaTime;
         Foundtarget();
         //for debug
@@ -74,7 +83,7 @@ public class Enemy : Entity
                 var p = c.GetComponent<Player>();
                 if(p!=null)
                 {
-                    if(!p.isDeath)
+                    if(!p.isDeath())
                     {
                         playerTarget = p;
                         estate = EnemyState.Combat;
@@ -86,7 +95,7 @@ public class Enemy : Entity
 
     void Combat()
     {
-        if (playerTarget == null || playerTarget.isDeath)
+        if (playerTarget == null || playerTarget.isDeath() || isDeath())
         {
             estate = EnemyState.patrol;
             playerTarget = null;
@@ -167,7 +176,6 @@ public class Enemy : Entity
     void Respawn()
     {
         hp = maxHp;
-        isDeath = false;
         sync.IsDead(false);
         transform.position = startPosition;
     }
@@ -182,5 +190,14 @@ public class Enemy : Entity
         int val = 1;
 
         return val;
+    }
+
+    public override void UpdateUI(int hp, int maxHp)
+    {
+        if(localUI!=null)
+        {
+            localhpBar.maxValue = maxHp;
+            localhpBar.value = hp;
+        }
     }
 }

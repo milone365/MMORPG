@@ -14,4 +14,5 @@ public class SaveData
     public string LevelName = "Level1";
     public int currentLevel = 1;
     public float x, y, z;
+    //public int currentHp=0, currentMana=0;
 }

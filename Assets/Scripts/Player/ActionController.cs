@@ -35,7 +35,7 @@ public class ActionController : MonoBehaviour
     {
         normal,atk,pik,bag,teleport
     }
-
+    Entity target;    
     public void Init(Player player)
     {
         this.player = player;
@@ -103,7 +103,7 @@ public class ActionController : MonoBehaviour
 
     void AutoAttack(float delta)
     {
-        if(enemyTarget==null || enemyTarget.isDeath)
+        if(enemyTarget==null || enemyTarget.isDeath())
         {
             autoMove = false;
             enemyTarget = null;
@@ -156,6 +156,7 @@ public class ActionController : MonoBehaviour
         Skill skill = action.skill;
         if (skill == null) return;
         if (action.button.Charging()) return;
+        
         if(skill.cost<=mana)
         {
             mana -= skill.cost;
@@ -163,24 +164,59 @@ public class ActionController : MonoBehaviour
             inAction = true;
             sync.PlayAnimation(skill.animName.ToString());
             action.button.SetCountDown();
+            UIManager.instance.UpdateMana(mana, player.maxMana);
         }
     }
-
     public void MouseLeft()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
+        bool leftClick = Input.GetMouseButtonDown(0);
+
         if (Physics.Raycast(ray, out hit))
         {
             switch(hit.transform.tag)
             {
                 case StaticStrings.enemy:
                     Cursor.SetCursor(cursorList[(int)Cursors.atk], Vector2.zero, CursorMode.Auto);
+                    if(leftClick)
+                    {
+                        Entity e = hit.transform.GetComponent<Entity>();
+                        SelectTarget(e);
+                    }
                     break;
                 case StaticStrings.teleport:
                     Cursor.SetCursor(cursorList[(int)Cursors.teleport], Vector2.zero, CursorMode.Auto);
                     break;
+                case StaticStrings.player:
+                    if(hit.transform!=this.transform)
+                    {
+                        if (leftClick)
+                        {
+                            Entity e = hit.transform.GetComponent<Entity>();
+                            SelectTarget(e);
+                        }
+                    }
+                    break;
             }
+        }
+        else
+        {
+            if(leftClick)
+            SelectTarget(null);
+        }
+    }
+
+    void SelectTarget(Entity e)
+    {
+        if(target!=null)
+        {
+            target.ShowMarker(false);
+        }
+        if(e!=null)
+        {
+            target = e;
+            target.ShowMarker(true);
         }
     }
 }
