@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4389962828154583121
+--- !u!1 &6323043265769830208
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,23 +8,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5945088628250107021}
-  - component: {fileID: 4288030433307956196}
-  - component: {fileID: 319644594155588062}
+  - component: {fileID: 4166536832084841372}
+  - component: {fileID: 8015328333962462927}
+  - component: {fileID: 8966132233895391962}
   m_Layer: 0
-  m_Name: HealingSpell
+  m_Name: ResurrectionSpell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5945088628250107021
+--- !u!4 &4166536832084841372
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4389962828154583121}
+  m_GameObject: {fileID: 6323043265769830208}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.7700982, y: 1.7424061, z: -1.4628383}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -33,27 +33,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4288030433307956196
+--- !u!114 &8015328333962462927
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4389962828154583121}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d0aace7af9f98c4f8cd568b15689960, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &319644594155588062
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4389962828154583121}
+  m_GameObject: {fileID: 6323043265769830208}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f40ba33d89acdd442be353d06b5f353c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeTime: 5
+--- !u!114 &8966132233895391962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6323043265769830208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aabbf47fca4ca6b45bae470a6c2579ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

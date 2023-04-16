@@ -121,9 +121,12 @@ public class Player : Entity
     }
 
     
-    public void Respawn()
+    public void Respawn(bool inPlace=false)
     {
-        transform.position = WorldManager.instance.respawnPoint.position;
+        if(inPlace==false)
+        {
+            transform.position = WorldManager.instance.respawnPoint.position;
+        }
         hp = maxHp;
         sync.IsDead(false);
         UIManager.instance.UpdateHP(hp, maxHp);
@@ -131,7 +134,7 @@ public class Player : Entity
         {
             view.RPC("SyncronizeStat", Photon.Pun.RpcTarget.All, hp,maxHp);
         }
-
+        WorldManager.instance.SpawnEffect(Effects.aura, transform.position + new Vector3(0, -1, 0), new Vector3(-90, 0, 0));
     }
     
     public void OnChangeItem()
@@ -187,5 +190,32 @@ public class Player : Entity
         }
         if (Photon.Pun.PhotonNetwork.IsConnected)
             view.RPC("SyncronizeStat", RpcTarget.All, hp, maxHp);
+    }
+
+    public void SendRequest(string Request)
+    {
+        if (Photon.Pun.PhotonNetwork.IsConnected)
+            view.RPC("RequestRpc", RpcTarget.All, Request);
+    }
+
+    [PunRPC]
+    public void RequestRpc(string request)
+    {
+        if (!photonView.IsMine) return;
+
+        switch(request)
+        {
+            case StaticStrings.resurrection:
+                UIManager.instance.ShowResurrectionRequest();
+                break;
+        }
+    }
+
+    public override void TargetSpellCustom(float lifetime, string sprite)
+    {
+        if(photonView.IsMine)
+        {
+            UIManager.instance.GenerateSlot(lifetime, sprite);
+        }     
     }
 }

@@ -227,6 +227,7 @@ public class ActionController : MonoBehaviour
 
     bool CanUseSpell(Skill skill)
     {
+        float dist = 0;
         switch (skill.spellTarget)
         {
             case SpellTarget.self:
@@ -234,10 +235,21 @@ public class ActionController : MonoBehaviour
             case SpellTarget.friend:
                 if (target == null) return false;
                 if(target is Enemy) return false;
+                dist = Vector3.Distance(transform.position, target.transform.position);
+                if(dist>skill.skillRange)
+                {
+                    return false;
+                }
+                if (skill.name == StaticStrings.resurrection && !target.isDeath()) return false;
                 break;
             case SpellTarget.enemy:
                 if (target == null) return false;
                 if (target is Player) return false;
+                dist = Vector3.Distance(transform.position, target.transform.position);
+                if (dist > skill.skillRange)
+                {
+                    return false;
+                }
                 break;
             case SpellTarget.friendsArea:
                 break;

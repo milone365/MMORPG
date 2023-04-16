@@ -13,11 +13,24 @@ public class WorldManager : MonoBehaviourPun
     public Object[] levelList = null;
     public GameObject[] prefabList = null;
     public PhotonView view;
+    List<Sprite> allGameImages = new List<Sprite>();
 
+    public Sprite GetSprite(string s)
+    {
+        foreach(var item in allGameImages)
+        {
+            if(item.name==s)
+            {
+                return item;
+            }
+        }
+        return null;
+    }
     private void Awake()
     {
         instance = this;
         levelList = Resources.LoadAll<Object>("Scenes");
+        allGameImages.AddRange(Resources.LoadAll<Sprite>("Images"));
     }
     private void Start()
     {
@@ -80,11 +93,11 @@ public class WorldManager : MonoBehaviourPun
         return null;
     }
 
-    float[] VectorConverter(Vector3 v)
+    public float[] VectorConverter(Vector3 v)
     {
         return new float[]{v.x,v.y,v.z};
     }
-    Vector3 ToVector(float[] arr)
+    public Vector3 ToVector(float[] arr)
     {
         return new Vector3(arr[0], arr[1], arr[2]);
     }

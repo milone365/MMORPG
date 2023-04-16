@@ -19,12 +19,13 @@ public static class StaticStrings
     public const string hp = "hp";
     public const string mana = "mana";
     public const string teleport = "teleport";
+    public const string resurrection = "Resurrection";
 }
 
 public static class Effects
 {
     public const string healing = "Heal";
-
+    public const string aura = "aura";
 }
 
 public static class Helper

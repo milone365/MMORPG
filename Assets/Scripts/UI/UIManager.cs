@@ -31,6 +31,13 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     Text playerName = null, level = null;
     //photo
+    [SerializeField]
+    PopUpBase popUpBase = null;
+    GameObject currentPopUp;
+    [SerializeField]
+    BuffSlot buffSlot = null;
+    [SerializeField]
+    Transform grid = null;
 
     private void Awake()
     {
@@ -173,4 +180,24 @@ public class UIManager : MonoBehaviour
         manaBar.maxValue = max;
         manaBar.value = current;
     }
+
+    public void ShowResurrectionRequest()
+    {
+        var popup = Instantiate(popUpBase, deathPanel.transform);
+        currentPopUp = popup.gameObject;
+        popup.Init("You Recive Resurrection Request.", 
+            delegate {
+                player.Respawn(true);
+                deathPanel.SetActive(false);
+                Destroy(currentPopUp);
+            }, 
+            delegate { Destroy(currentPopUp);});
+    }
+
+    public void GenerateSlot(float lifeTime,string spriteName)
+    {
+        var slot = Instantiate(buffSlot, grid);
+        slot.Init(WorldManager.instance.GetSprite(spriteName),lifeTime);
+    }
+
 }

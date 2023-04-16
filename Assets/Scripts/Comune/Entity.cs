@@ -30,6 +30,10 @@ public abstract class Entity : MonoBehaviourPun
     protected UnityEngine.UI.Slider localhpBar = null;
     [SerializeField]
     GameObject circle = null;
+    [SerializeField]
+    BuffSlot slotPrefab = null;
+    [SerializeField]
+    Transform grid = null;
 
     void Start()
     {
@@ -127,5 +131,29 @@ public abstract class Entity : MonoBehaviourPun
         {
             circle.SetActive(val);
         }
+    }
+    
+    public void BecameSpellTarget(Skill skill)
+    {
+        view.RPC("SpellTargetRpc", RpcTarget.All, skill.effectName,skill.activationTime,
+            WorldManager.instance.VectorConverter(skill.effectOffset),skill.sprite.name);
+    }
+
+    [PunRPC]
+    public void SpellTargetRpc(string effectName,float lifetime,float[] posOffset,string sprite)
+    {
+        TargetSpellCustom(lifetime, sprite);
+        var prefab = WorldManager.instance.GetPrefab(effectName);
+        if (prefab == null) return;
+        var gameobjet= Instantiate(prefab, transform);
+        gameobjet.transform.localPosition = Vector3.zero + WorldManager.instance.ToVector(posOffset);
+        var slot = Instantiate(slotPrefab, grid);
+        slot.Init(WorldManager.instance.GetSprite(sprite), lifetime);
+        Destroy(gameobjet, lifetime);
+    }
+
+    public virtual void TargetSpellCustom(float lifetime,string sprite)
+    {
+
     }
 }

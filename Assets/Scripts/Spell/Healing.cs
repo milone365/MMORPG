@@ -7,20 +7,18 @@ public class Healing : Spell
 
     public override void Initialize(Skill skill, Entity owner = null, Entity target = null)
     {
-        Player player = owner as Player;
-        int power = player.GetInventory().GetParameter(StaticStrings.intellect);
-        power += skill.spellPower;
+        base.Initialize(skill,owner,target);
         switch (skill.spellTarget)
         {
             case SpellTarget.self:
-                owner.Healing(power);
+                owner.Healing(spellPower);
                 WorldManager.instance.SpawnEffect(Effects.healing, owner.transform.position, Vector3.zero);
                 break;
             case SpellTarget.friend:
                 if (target == null) return;
                 if(!target.isDeath())
                 {
-                    target.Healing(power);
+                    target.Healing(spellPower);
                     WorldManager.instance.SpawnEffect(Effects.healing, target.transform.position, Vector3.zero);
                 }
                 break;
@@ -31,7 +29,7 @@ public class Healing : Spell
                     if(c.tag==StaticStrings.player)
                     {
                         var Player = c.GetComponent<Player>();
-                        c.GetComponent<Player>().Healing(power);
+                        c.GetComponent<Player>().Healing(spellPower);
                         WorldManager.instance.SpawnEffect(Effects.healing, c.transform.position, Vector3.zero);
                     }
                 }    

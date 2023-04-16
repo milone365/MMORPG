@@ -10,14 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59b58bc8c7beaa348ba4e3bffa06ef0f, type: 3}
-  m_Name: HealingSelf
+  m_Name: HealingAura
   m_EditorClassIdentifier: 
   animName: 6
   sprite: {fileID: 21300000, guid: 42f6c722ead369b4b934a116b4324a4d, type: 3}
   cost: 2
-  countDown: 60
-  activationTime: 5
+  countDown: 3
+  activationTime: 10
+  skillRange: 15
   spellTarget: 0
-  spellPower: 10
+  spellPower: 1
   radius: 5
-  spellPrefab: {fileID: 4288030433307956196, guid: 20d1d52566a1cf440b9bce77d7b2123b, type: 3}
+  spellPrefab: {fileID: -4346261840714567653, guid: b58b9af5608db994cbb00b6074e78821, type: 3}
+  effectOffset: {x: 0, y: -1, z: 0}
+  effectName: BlackAura

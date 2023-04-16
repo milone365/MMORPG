@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59b58bc8c7beaa348ba4e3bffa06ef0f, type: 3}
-  m_Name: HealingSelf
+  m_Name: Resurrection
   m_EditorClassIdentifier: 
   animName: 6
-  sprite: {fileID: 21300000, guid: 42f6c722ead369b4b934a116b4324a4d, type: 3}
-  cost: 2
-  countDown: 60
+  sprite: {fileID: 21300000, guid: feb8709f10385a94095b55fe8d0f625c, type: 3}
+  cost: 15
+  countDown: 3
   activationTime: 5
-  spellTarget: 0
-  spellPower: 10
+  spellTarget: 1
+  spellPower: 1
   radius: 5
-  spellPrefab: {fileID: 4288030433307956196, guid: 20d1d52566a1cf440b9bce77d7b2123b, type: 3}
+  spellPrefab: {fileID: 8966132233895391962, guid: c02e51498764bca478b2956b0db08b23, type: 3}
