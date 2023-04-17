@@ -10,8 +10,7 @@ public abstract class Spell : MonoBehaviour
     public int spellPower=1;
     public virtual void Initialize(Skill skill,Entity owner=null,Entity target=null)
     {
-        Player p = owner as Player;
-        spellPower = p.GetInventory().GetParameter(StaticStrings.intellect);
+        spellPower = Helper.GetParameter(owner, StaticStrings.intellect);
         spellPower += skill.spellPower;
         Collider[] colliders = Physics.OverlapSphere(transform.position, skill.radius);
         switch (skill.spellTarget)

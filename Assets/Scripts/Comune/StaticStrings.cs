@@ -26,6 +26,8 @@ public static class Effects
 {
     public const string healing = "Heal";
     public const string aura = "aura";
+    public const string DamagePopUp = "DamagePopUp";
+    public const string HealPopUp = "HealPopUp";
 }
 
 public static class Helper
@@ -55,5 +57,61 @@ public static class Helper
         return c;
     }
 
-
+    public static int GetParameter(Entity owner,string param)
+    {
+        int val = 0;
+        Player player = owner as Player;
+        if(player!=null)
+        {
+            switch (param)
+            {
+                case StaticStrings.strenght:
+                    val += player.GetInventory().GetParameter(param) + 
+                        player.data.stat.Strenght + player.strengtBonus.GetBonus();
+                    break;
+                case StaticStrings.agility:
+                    val += player.GetInventory().GetParameter(param) +
+    player.data.stat.Agility + player.agilityBonus.GetBonus();
+                    break;
+                case StaticStrings.intellect:
+                    val += player.GetInventory().GetParameter(param) +
+    player.data.stat.Intellect + player.intellectBonus.GetBonus();
+                    break;
+                case StaticStrings.armor:
+                    val += player.GetInventory().GetParameter(param) + player.armorBonus.GetBonus();
+                    break;
+            }
+        }
+        else
+        {
+            Enemy enemy = owner as Enemy;
+            if(enemy!=null)
+            {
+                switch (param)
+                {
+                    case StaticStrings.strenght:
+                        val += enemy.GetParameter(param) +
+                            enemy.stats.Strenght + enemy.strengtBonus.GetBonus();
+                        break;
+                    case StaticStrings.agility:
+                        val += enemy.GetParameter(param) +
+        enemy.stats.Agility + enemy.agilityBonus.GetBonus();
+                        break;
+                    case StaticStrings.intellect:
+                        val += enemy.GetParameter(param) +
+        enemy.stats.Intellect + enemy.intellectBonus.GetBonus();
+                        break;
+                    case StaticStrings.armor:
+                        val += enemy.GetParameter(param) + enemy.armorBonus.GetBonus();
+                        break;
+                }
+            }
+        }
+        if(val<=0)
+        {
+            val = 1;
+        }
+        
+        return val;
+    }
 }

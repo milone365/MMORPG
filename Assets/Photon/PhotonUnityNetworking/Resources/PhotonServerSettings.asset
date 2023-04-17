@@ -49,6 +49,7 @@ MonoBehaviour:
   - SpawnPrefabRpc
   - RequestRpc
   - SpellTargetRpc
+  - SpawnPopUpRpc
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

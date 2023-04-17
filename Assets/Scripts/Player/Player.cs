@@ -189,7 +189,10 @@ public class Player : Entity
             view = PhotonView.Get(this);
         }
         if (Photon.Pun.PhotonNetwork.IsConnected)
+        {
+            view.RPC("SpawnPopUpRpc", RpcTarget.All, heal);
             view.RPC("SyncronizeStat", RpcTarget.All, hp, maxHp);
+        }
     }
 
     public void SendRequest(string Request)

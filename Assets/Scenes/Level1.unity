@@ -132,11 +132,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1265476447, guid: 4c176df3ad4b4454d927eeb09144351c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1265476447, guid: 4c176df3ad4b4454d927eeb09144351c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1769813028, guid: 4c176df3ad4b4454d927eeb09144351c, type: 3}
       propertyPath: m_AnchorMax.x
@@ -208,7 +208,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8354701189602405101, guid: 4c176df3ad4b4454d927eeb09144351c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c176df3ad4b4454d927eeb09144351c, type: 3}
@@ -547,7 +547,6 @@ MonoBehaviour:
   respawnPoint: {fileID: 696768077}
   playerList: []
   deathZone: {x: 0, y: -10, z: 0}
-  levelList: []
   prefabList: []
   view: {fileID: 0}
 --- !u!4 &1148530694
@@ -768,6 +767,34 @@ PrefabInstance:
     - target: {fileID: 692033005301971702, guid: 6d115f9516c337f49a97179c71a7c5f5, type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 692033005301971703, guid: 6d115f9516c337f49a97179c71a7c5f5, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 692033005301971703, guid: 6d115f9516c337f49a97179c71a7c5f5, type: 3}
+      propertyPath: maxHp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 692033005301971703, guid: 6d115f9516c337f49a97179c71a7c5f5, type: 3}
+      propertyPath: maxMana
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 692033005301971703, guid: 6d115f9516c337f49a97179c71a7c5f5, type: 3}
+      propertyPath: leftWeapon
+      value: 
+      objectReference: {fileID: 11400000, guid: af33a5ffc4b84c44aa6b5c39527c7c27, type: 2}
+    - target: {fileID: 692033005301971703, guid: 6d115f9516c337f49a97179c71a7c5f5, type: 3}
+      propertyPath: hpMultipler
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 692033005301971703, guid: 6d115f9516c337f49a97179c71a7c5f5, type: 3}
+      propertyPath: rightWeapon
+      value: 
+      objectReference: {fileID: 11400000, guid: 7851a77d2eec90b408ca25848cb9f5da, type: 2}
+    - target: {fileID: 692033005301971703, guid: 6d115f9516c337f49a97179c71a7c5f5, type: 3}
+      propertyPath: stats.Strenght
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 692033005301971710, guid: 6d115f9516c337f49a97179c71a7c5f5, type: 3}
       propertyPath: m_RootOrder

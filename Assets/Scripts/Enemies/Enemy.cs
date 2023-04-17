@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Linq;
 public class Enemy : Entity
 {
     [SerializeField]
@@ -32,11 +32,13 @@ public class Enemy : Entity
     [SerializeField]
     float maxDistance = 15;
     public Stats stats = new Stats();
-
+    public Equip head, body, leg, shoes, belt, shoulder;
+    public Equip leftWeapon, rightWeapon;
     public override void Init()
     {
         base.Init();
-        CalculateStats(stats.Stamina, stats.Intellect);
+        CalculateStats(stats.Stamina + GetParameter(StaticStrings.stamina), stats.Intellect+ 
+            GetParameter(StaticStrings.intellect));
         timer.StartTimer(wait);
         startPosition = transform.position;
         endPos = transform.position + direction;
@@ -188,8 +190,7 @@ public class Enemy : Entity
 
     int GetDamage()
     {
-        int val = 1;
-
+        int val = Helper.GetParameter(this,StaticStrings.strenght);
         return val;
     }
 
@@ -200,5 +201,48 @@ public class Enemy : Entity
             localhpBar.maxValue = maxHp;
             localhpBar.value = hp;
         }
+    }
+
+    public int GetParameter(string s)
+    {
+        var equip = AllEquip().Where(x => x != null);
+        int val = 0;
+        foreach (var e in equip)
+        {
+            switch (s)
+            {
+                case StaticStrings.stamina:
+                    val += e.stamina;
+                    break;
+                case StaticStrings.strenght:
+                    val += e.strenght;
+                    break;
+                case StaticStrings.intellect:
+                    val += e.intellect;
+                    break;
+                case StaticStrings.agility:
+                    val += e.agility;
+                    break;
+                case StaticStrings.armor:
+                    val += e.armor;
+                    break;
+            }
+        }
+        return val;
+    }
+
+    public List<Equip> AllEquip()
+    {
+        List<Equip> equipList = new List<Equip>();
+        equipList.Add(head);
+        equipList.Add(body);
+        equipList.Add(leg);
+        equipList.Add(shoes);
+        equipList.Add(belt);
+        equipList.Add(shoulder);
+        equipList.Add(leftWeapon);
+        equipList.Add(rightWeapon);
+
+        return equipList;
     }
 }

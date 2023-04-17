@@ -10,7 +10,6 @@ public class WorldManager : MonoBehaviourPun
     [SerializeField]
     Vector3 deathZone = new Vector3(0, -10, 0);
     public static WorldManager instance;
-    public Object[] levelList = null;
     public GameObject[] prefabList = null;
     public PhotonView view;
     List<Sprite> allGameImages = new List<Sprite>();
@@ -29,7 +28,6 @@ public class WorldManager : MonoBehaviourPun
     private void Awake()
     {
         instance = this;
-        levelList = Resources.LoadAll<Object>("Scenes");
         allGameImages.AddRange(Resources.LoadAll<Sprite>("Images"));
     }
     private void Start()
@@ -101,4 +99,5 @@ public class WorldManager : MonoBehaviourPun
     {
         return new Vector3(arr[0], arr[1], arr[2]);
     }
+    
 }
