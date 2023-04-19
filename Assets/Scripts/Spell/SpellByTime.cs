@@ -11,7 +11,7 @@ public class SpellByTime : Spell
         base.Initialize(skill, owner, target);
         foreach(var item in allTargets)
         {
-            item.BecameSpellTarget(skill);
+            item.BecameSpellTarget(skill,owner);
         }
         Destroy(gameObject, skill.activationTime);
     }

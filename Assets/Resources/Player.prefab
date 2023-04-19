@@ -957,10 +957,18 @@ MonoBehaviour:
   circle: {fileID: 2548090310185427919}
   slotPrefab: {fileID: 1475001164340910356, guid: 748b37fec0505d2478ac6eb4b0e7c87d, type: 3}
   grid: {fileID: 4234981206774225518}
-  rotSpeed: 2
-  scrollAmount: 3
-  minZoom: 10
-  maxZoom: 120
+  strengtBonus:
+    bonus: 0
+    malus: 0
+  intellectBonus:
+    bonus: 0
+    malus: 0
+  agilityBonus:
+    bonus: 0
+    malus: 0
+  armorBonus:
+    bonus: 0
+    malus: 0
   data:
     characterName: Pippo
     stat:
@@ -980,9 +988,15 @@ MonoBehaviour:
     x: 0
     y: 0
     z: 0
+    experience: 0
+  rotSpeed: 2
+  scrollAmount: 3
+  minZoom: 10
+  maxZoom: 120
   CanMove: 1
   uiMan: {fileID: 2023339601464910974, guid: 2340294b2fe4c874f80b0cb3e3140909, type: 3}
   debugClass: 0
+  inAction: 0
 --- !u!114 &1312401200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1601,6 +1615,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74548323343f6214885c93e12add4b70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
 --- !u!114 &4065303542993571234
 MonoBehaviour:
   m_ObjectHideFlags: 0

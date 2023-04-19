@@ -62,7 +62,6 @@ public abstract class Entity : MonoBehaviourPun
     }
     public void TakeDamage(int dmg)
     {
-        dmg -= Helper.GetParameter(this, StaticStrings.armor);
         if(dmg<=0)
         {
             dmg = 1;
@@ -100,8 +99,11 @@ public abstract class Entity : MonoBehaviourPun
     {
         if(photonView.IsMine)
         {
-            hp -= dmg;
-            view.RPC("SpawnPopUpRpc", RpcTarget.All, -dmg);
+            var damage= dmg -= Helper.GetParameter(this, StaticStrings.armor);
+            if (damage <= 1) damage = 1;
+            hp -= damage;
+
+            view.RPC("SpawnPopUpRpc", RpcTarget.All, -damage);
             if (hp <= 0)
             {
                 hp = 0;
@@ -143,7 +145,7 @@ public abstract class Entity : MonoBehaviourPun
         }
     }
     
-    public void BecameSpellTarget(Skill skill)
+    public virtual void BecameSpellTarget(Skill skill,Entity owner=null)
     {
         view.RPC("SpellTargetRpc", RpcTarget.All, skill.effectName,skill.activationTime,
             WorldManager.instance.VectorConverter(skill.effectOffset),skill.sprite.name);
@@ -191,6 +193,8 @@ public abstract class Entity : MonoBehaviourPun
     }
 }
 
+
+[System.Serializable]
 public class Bonus
 {
     public int bonus = 0;
@@ -198,6 +202,6 @@ public class Bonus
 
     public int GetBonus()
     {
-        return bonus + malus;
+        return bonus - malus;
     }
 }

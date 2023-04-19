@@ -59,6 +59,9 @@ public class ActionController : MonoBehaviour
         {
             autoMove = false;
         }
+
+        inAction = sync.anim.GetBool(StaticStrings.inAction);
+        if (inAction) return;
         if(autoMove)
         {
             if(enemyTarget==null)
@@ -106,6 +109,8 @@ public class ActionController : MonoBehaviour
 
     void AutoAttack(float delta)
     {
+        inAction = sync.anim.GetBool(StaticStrings.inAction);
+        if (inAction) return;
         if(enemyTarget==null || enemyTarget.isDeath())
         {
             autoMove = false;
@@ -117,6 +122,7 @@ public class ActionController : MonoBehaviour
             attackTimer.StartTimer(attackDealy);
             sync.PlayAnimation("atk");
             enemyTarget.TakeDamage(GetDamage());
+            enemyTarget.AddToBattleList(player);
         }
     }
 
@@ -166,6 +172,7 @@ public class ActionController : MonoBehaviour
             currentSkill = skill;
             //to do... > cost>
             inAction = true;
+            sync.anim.SetBool(StaticStrings.inAction, inAction);
             sync.PlayAnimation(skill.animName.ToString());
             action.button.SetCountDown();
             UIManager.instance.UpdateMana(mana, player.maxMana);
@@ -226,6 +233,7 @@ public class ActionController : MonoBehaviour
 
     bool CanUseSpell(Skill skill)
     {
+        if (inAction) return false;
         float dist = 0;
         switch (skill.spellTarget)
         {

@@ -20,6 +20,7 @@ public static class StaticStrings
     public const string mana = "mana";
     public const string teleport = "teleport";
     public const string resurrection = "Resurrection";
+    public const string inAction="inAction";
 }
 
 public static class Effects
@@ -28,6 +29,7 @@ public static class Effects
     public const string aura = "aura";
     public const string DamagePopUp = "DamagePopUp";
     public const string HealPopUp = "HealPopUp";
+    public const string LevelUp = "LevelUp";
 }
 
 public static class Helper
@@ -113,5 +115,28 @@ public static class Helper
         }
         
         return val;
+    }
+
+    public static void GoNextLevel(ref SaveData data)
+    {
+        while(data.stat.Level<100 && data.experience>=GetNextLevelExperience(data.stat.Level))
+        {
+            int toRemove = GetNextLevelExperience(data.stat.Level);
+            if (data.experience>=toRemove)
+            {
+                data.experience -= toRemove;
+                data.stat.Level++;
+                data.stat.Stamina++;
+                data.stat.Strenght++;
+                data.stat.Intellect++;
+                data.stat.Agility++;
+            }
+        }
+    }
+
+    static int GetNextLevelExperience(int level)
+    {
+        var val = level * 1.33 * 100;
+        return (int)val;
     }
 }

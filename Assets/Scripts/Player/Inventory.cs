@@ -37,19 +37,19 @@ public class Inventory
         {
             switch (s)
             {
-                case "stamina":
+                case StaticStrings.stamina:
                     val += e.stamina;
                     break;
-                case "strenght":
+                case StaticStrings.strenght:
                     val += e.strenght;
                     break;
-                case "intellect":
+                case StaticStrings.intellect:
                     val += e.intellect;
                     break;
-                case "agility":
+                case StaticStrings.agility:
                     val += e.agility;
                     break;
-                case "armor":
+                case StaticStrings.armor:
                     val += e.armor;
                     break;
             }

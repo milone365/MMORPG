@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Photon.Pun;
+
 public class Enemy : Entity
 {
     [SerializeField]
@@ -34,6 +36,8 @@ public class Enemy : Entity
     public Stats stats = new Stats();
     public Equip head, body, leg, shoes, belt, shoulder;
     public Equip leftWeapon, rightWeapon;
+    public int exp = 100;
+    public List<Player> haveBattleList = new List<Player>();
     public override void Init()
     {
         base.Init();
@@ -45,6 +49,14 @@ public class Enemy : Entity
         destination = endPos;
         OnDeathEvent = () =>
           {
+              if(haveBattleList.Count>0)
+              {
+                  foreach(var item in haveBattleList)
+                  {
+                      item.AddExperience(exp);
+                  }
+                  haveBattleList.Clear();
+              }
               Invoke("Respawn",respawnTime);
           };
         hp = maxHp;
@@ -89,11 +101,52 @@ public class Enemy : Entity
                     {
                         playerTarget = p;
                         estate = EnemyState.Combat;
+                        AddToBattleList(p);
                     }
                 }
             }
         }
     }
+
+    public void AddToBattleList(Player player)
+    {
+        bool exist = false;
+        foreach(var item in haveBattleList)
+        {
+            if(item.gameObject==player.gameObject)
+            {
+                exist = true;
+            }
+        }
+        if(!exist)
+        {
+            haveBattleList.Add(player);
+        }
+        if(playerTarget==null)
+        {
+            view.RPC("Allert",RpcTarget.All,WorldManager.instance.VectorConverter(player.transform.position));
+        }
+    }
+    
+    [PunRPC]
+    public void Allert(float[] pos)
+    {
+        if (!photonView.IsMine) return;
+        Vector3 position = WorldManager.instance.ToVector(pos);
+        Collider[] collider = Physics.OverlapSphere(position, 1);
+        foreach(var c in collider)
+        {
+            Player player = c.GetComponent<Player>();
+            if(player!=null)
+            {
+                playerTarget = player;
+                estate = EnemyState.Combat;
+                break;
+            }
+        }
+
+    }
+    
 
     void Combat()
     {
@@ -207,24 +260,31 @@ public class Enemy : Entity
     {
         var equip = AllEquip().Where(x => x != null);
         int val = 0;
+        if (equip.Count() < 1) return val;
+
         foreach (var e in equip)
         {
             switch (s)
             {
                 case StaticStrings.stamina:
-                    val += e.stamina;
+                    if(e!=null)
+                        val += e.stamina;
                     break;
                 case StaticStrings.strenght:
-                    val += e.strenght;
+                    if (e != null)
+                        val += e.strenght;
                     break;
                 case StaticStrings.intellect:
-                    val += e.intellect;
+                    if (e != null)
+                        val += e.intellect;
                     break;
                 case StaticStrings.agility:
-                    val += e.agility;
+                    if (e != null)
+                        val += e.agility;
                     break;
                 case StaticStrings.armor:
-                    val += e.armor;
+                    if (e != null)
+                        val += e.armor;
                     break;
             }
         }
@@ -244,5 +304,14 @@ public class Enemy : Entity
         equipList.Add(rightWeapon);
 
         return equipList;
+    }
+    public override void BecameSpellTarget(Skill skill, Entity owner = null)
+    {
+        Player player = owner as Player;
+        if(player!=null)
+        {
+            AddToBattleList(player);
+        }
+        base.BecameSpellTarget(skill, owner);
     }
 }

@@ -5,7 +5,8 @@ using Photon.Pun;
 
 public class AnimatorSync : MonoBehaviourPun
 {
-    Animator anim;
+    [HideInInspector]
+    public Animator anim;
     PhotonView view;
     public System.Action OnEndAnimationEvent = null;
     public void Init()

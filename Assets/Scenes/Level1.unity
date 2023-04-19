@@ -132,11 +132,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1265476447, guid: 4c176df3ad4b4454d927eeb09144351c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1265476447, guid: 4c176df3ad4b4454d927eeb09144351c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1769813028, guid: 4c176df3ad4b4454d927eeb09144351c, type: 3}
       propertyPath: m_AnchorMax.x
@@ -208,7 +208,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8354701189602405101, guid: 4c176df3ad4b4454d927eeb09144351c, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c176df3ad4b4454d927eeb09144351c, type: 3}
@@ -773,6 +773,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 692033005301971703, guid: 6d115f9516c337f49a97179c71a7c5f5, type: 3}
+      propertyPath: exp
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 692033005301971703, guid: 6d115f9516c337f49a97179c71a7c5f5, type: 3}
       propertyPath: maxHp
       value: 1
       objectReference: {fileID: 0}
@@ -792,6 +796,10 @@ PrefabInstance:
       propertyPath: rightWeapon
       value: 
       objectReference: {fileID: 11400000, guid: 7851a77d2eec90b408ca25848cb9f5da, type: 2}
+    - target: {fileID: 692033005301971703, guid: 6d115f9516c337f49a97179c71a7c5f5, type: 3}
+      propertyPath: stats.Level
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 692033005301971703, guid: 6d115f9516c337f49a97179c71a7c5f5, type: 3}
       propertyPath: stats.Strenght
       value: 3

@@ -50,6 +50,8 @@ MonoBehaviour:
   - RequestRpc
   - SpellTargetRpc
   - SpawnPopUpRpc
+  - Combat
+  - Allert
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

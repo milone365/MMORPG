@@ -5,6 +5,7 @@ using Photon.Pun;
 
 public class Player : Entity
 {
+    public SaveData data = new SaveData();
     CameraFollow follow;
     [SerializeField]
     float rotSpeed = 2;
@@ -15,12 +16,12 @@ public class Player : Entity
     ActionController controller;
     const float second = 1;
     float manaCounter=1;
-    public SaveData data = new SaveData();
     public bool CanMove = true;
     [SerializeField]
     GameObject uiMan = null;
     [SerializeField]
     CharacterClass debugClass = CharacterClass.warrior;
+    public bool inAction = false;
     public Inventory GetInventory()
     {
         return controller.inventory;
@@ -91,6 +92,7 @@ public class Player : Entity
         }
         UseCamera();
         if (isDeath()) return;
+        if (inAction) return;
         float x = Input.GetAxisRaw(StaticStrings.horizontal);
         float y = Input.GetAxisRaw(StaticStrings.vertical);
         Vector3 move = (transform.right * x) + (transform.forward * y);
@@ -220,5 +222,19 @@ public class Player : Entity
         {
             UIManager.instance.GenerateSlot(lifetime, sprite);
         }     
+    }
+
+    public void AddExperience(int experience)
+    {
+        if (!photonView.IsMine) return;
+
+        data.experience += experience;
+        Helper.GoNextLevel(ref data);
+        UIManager.instance.SetUpPlayer(this);
+        Vector3 pos = transform.position + new Vector3(0, -1, 0);
+        Vector3 rot = new Vector3(-90, 0, 0);
+        WorldManager.instance.SpawnEffect(Effects.LevelUp,pos,rot);
+        OnChangeItem();
+        UpdateUI(hp,maxHp);
     }
 }
