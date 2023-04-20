@@ -6,7 +6,6 @@ using System.Linq;
 [System.Serializable]
 public class Inventory 
 {
-
     public List<Pair<Skill, int>> equippedSkill = new List<Pair<Skill, int>>();
     public List<Skill> skills = new List<Skill>();
     public List<Item> items = new List<Item>();
@@ -132,11 +131,13 @@ public class Inventory
                 {
                     lastEquip = leftWeapon;
                     leftWeapon = equip;
+                    player.ChangeWeapon(leftWeapon, true);
                 }
                 else
                 {
                     lastEquip = rightWeapon;
                     rightWeapon = equip;
+                    player.ChangeWeapon(rightWeapon, false);
                 }
                 break;
         }
@@ -148,6 +149,7 @@ public class Inventory
         player.OnChangeItem();
     }
 
+    
     public void RemoveItem(Equip e)
     {
         foreach(var i in items)

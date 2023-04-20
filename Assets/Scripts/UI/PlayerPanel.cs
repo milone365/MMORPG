@@ -35,6 +35,8 @@ public class PlayerPanel : MonoBehaviour
     Text itemStrenght = null, itemIntellect = null;
     [SerializeField]
     Text itemName=null, itemAgility=null, itemArmor = null;
+    [SerializeField]
+    BodySlot[] bodySlots = null;
 
     public void Init(Player p,Inventory inventory)
     {
@@ -52,6 +54,7 @@ public class PlayerPanel : MonoBehaviour
             );
         }
         ShowStats();
+        SetEquipped(inventory.AllEquip());
     }
     private void Update()
     {
@@ -203,5 +206,32 @@ public class PlayerPanel : MonoBehaviour
     {
         player.CanMove = true;
         Destroy(gameObject);
+    }
+
+    void SetEquipped(List<Equip> allEquip)
+    {
+        if (allEquip.Count < 1) return;
+        int id = 0;
+        foreach(var e in allEquip)
+        {
+            if(e!=null)
+            {
+                var slot = GetSlot(e.type, id);
+                if(slot!=null)
+                slot.UpdateDetails(e);
+            }
+            id++;
+        }
+    }
+    BodySlot GetSlot(EquipType t,int id)
+    {
+        foreach(var s in bodySlots)
+        {
+            if(s.type==t && id==s.id)
+            {
+                return s;
+            }
+        }
+        return null;
     }
 }

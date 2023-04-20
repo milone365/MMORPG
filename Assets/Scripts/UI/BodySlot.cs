@@ -6,16 +6,19 @@ public class BodySlot : MonoBehaviour
 {
     [SerializeField]
     Image border = null, icon = null;
-    [SerializeField]
-    EquipType type = EquipType.head;
-    [SerializeField]
-    int id = 0;
+    public EquipType type = EquipType.head;
+    public int id = 0;
     public bool SetUp(Equip e,Inventory inventory)
     {
         if (e.type != type) return false;
         inventory.SetEquip(e, id);
+        UpdateDetails(e);
+        return true;
+    }
+
+    public void UpdateDetails(Equip e)
+    {
         icon.sprite = e.sprite;
         border.color = Helper.GetColor(e.rarety);
-        return true;
     }
 }

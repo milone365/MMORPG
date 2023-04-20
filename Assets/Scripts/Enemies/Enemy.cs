@@ -231,8 +231,10 @@ public class Enemy : Entity
     void Respawn()
     {
         hp = maxHp;
+        view.RPC("SyncronizeStat", RpcTarget.All, hp, maxHp);
         sync.IsDead(false);
         transform.position = startPosition;
+        playerTarget = null;
         UpdateUI(hp, maxHp);
     }
 

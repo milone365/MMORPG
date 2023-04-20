@@ -38,7 +38,7 @@ public abstract class Entity : MonoBehaviourPun
     public Bonus intellectBonus = new Bonus();
     public Bonus agilityBonus = new Bonus();
     public Bonus armorBonus = new Bonus();
-
+   
     void Start()
     {
         Init();        

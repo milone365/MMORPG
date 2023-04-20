@@ -3656,7 +3656,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0.000021438633, y: 320.5719}
+  m_AnchoredPosition: {x: 0.000021438633, y: 325.01596}
   m_SizeDelta: {x: 70, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &3555901708408274272
@@ -4051,6 +4051,15 @@ MonoBehaviour:
   itemName: {fileID: 5897928944081768634}
   itemAgility: {fileID: 9053226006066646425}
   itemArmor: {fileID: 4665053687656679110}
+  bodySlots:
+  - {fileID: 5052019826178002460}
+  - {fileID: 619586123}
+  - {fileID: 1424832191}
+  - {fileID: 216025259}
+  - {fileID: 2135679806}
+  - {fileID: 1755321992}
+  - {fileID: 1626817424}
+  - {fileID: 622087206}
 --- !u!1 &579000085722433155
 GameObject:
   m_ObjectHideFlags: 0
@@ -7521,8 +7530,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6263123934291536592}
   m_HandleRect: {fileID: 6854472996517252188}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.4999999
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

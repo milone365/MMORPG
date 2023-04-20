@@ -22,3 +22,8 @@ MonoBehaviour:
   intellect: 0
   agility: 0
   armor: 5
+  model: {fileID: 100000, guid: cd90e90b67817cc43a7084d63f194c0b, type: 3}
+  leftPos: {x: 0.091, y: 0.408, z: -0.079}
+  rightPos: {x: 0.112, y: -0.305, z: 0.073}
+  leftRot: {x: 180, y: 90, z: 0}
+  rightRot: {x: 0, y: -90, z: 0}

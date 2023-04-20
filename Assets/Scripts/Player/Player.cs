@@ -30,6 +30,13 @@ public class Player : Entity
     {
         return data.stat;
     }
+    [SerializeField]
+    Transform LeftHolder = null, rightHolder = null;
+    public GameObject GetModel(Transform t)
+    {
+        if (t.childCount < 1) return null;
+        return t.GetChild(0).gameObject;
+    }
 
     public override void Init()
     {
@@ -226,6 +233,12 @@ public class Player : Entity
 
     public void AddExperience(int experience)
     {
+        view.RPC("AddExperienceRpc", RpcTarget.All, experience);
+    }
+
+    [PunRPC]
+    public void AddExperienceRpc(int experience)
+    {
         if (!photonView.IsMine) return;
 
         data.experience += experience;
@@ -233,8 +246,30 @@ public class Player : Entity
         UIManager.instance.SetUpPlayer(this);
         Vector3 pos = transform.position + new Vector3(0, -1, 0);
         Vector3 rot = new Vector3(-90, 0, 0);
-        WorldManager.instance.SpawnEffect(Effects.LevelUp,pos,rot);
+        WorldManager.instance.SpawnEffect(Effects.LevelUp, pos, rot);
         OnChangeItem();
-        UpdateUI(hp,maxHp);
+        UpdateUI(hp, maxHp);
+    }
+
+    public void ChangeWeapon(Equip weapon,bool isLeft)
+    {
+        if (weapon == null) return;
+        if (weapon.model == null) return;
+        view.RPC("ChangeWeaponRpc", RpcTarget.AllBuffered,weapon.name, isLeft);
+    }
+    
+    [PunRPC]
+    public void ChangeWeaponRpc(string ItemName,bool isLeft)
+    {
+        var weapon = WorldManager.instance.GetEquip(ItemName);
+        Transform holder = (isLeft == true) ? LeftHolder : rightHolder;
+        GameObject oldWeapon = GetModel(holder);
+        if (oldWeapon != null)
+        {
+            Destroy(oldWeapon);
+        }
+        GameObject newWeapon = Instantiate(weapon.model, holder);
+        newWeapon.transform.localPosition = (isLeft == true) ? weapon.leftPos : weapon.rightPos;
+        newWeapon.transform.localRotation = Quaternion.Euler((isLeft == true) ? weapon.leftRot : weapon.rightRot);
     }
 }
