@@ -10,18 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59b58bc8c7beaa348ba4e3bffa06ef0f, type: 3}
-  m_Name: BowShot
+  m_Name: MagicDart
   m_EditorClassIdentifier: 
-  animName: 1
-  sprite: {fileID: 21300000, guid: a67b58d6cddcd4345b1e001340de5a76, type: 3}
-  cost: 15
+  animName: 9
+  sprite: {fileID: 21300000, guid: 4029a9cfeb86f134c9c5af05993eaac8, type: 3}
+  cost: 2
   countDown: 3
   activationTime: 5
   skillRange: 15
   spellTarget: 2
   spellPower: 1
   radius: 5
-  spellPrefab: {fileID: 0}
+  spellPrefab: {fileID: 4492977144668629551, guid: b11edb1adb7571c45b2d142a341ece88, type: 3}
   effectOffset: {x: 0, y: -1, z: 0}
-  effectName: BlackAura
-  needRPC: 1
+  effectName: MagicDart

@@ -38,7 +38,9 @@ public abstract class Entity : MonoBehaviourPun
     public Bonus intellectBonus = new Bonus();
     public Bonus agilityBonus = new Bonus();
     public Bonus armorBonus = new Bonus();
-   
+
+    public Transform spawnPoint = null;
+
     void Start()
     {
         Init();        
@@ -191,6 +193,7 @@ public abstract class Entity : MonoBehaviourPun
             gameObject.GetComponentInChildren<UnityEngine.UI.Text>().text = amount.ToString();
         }
     }
+
 }
 
 

@@ -55,6 +55,11 @@ MonoBehaviour:
   - AddExperienceRpc
   - GenerateRpc
   - ChangeWeaponRpc
+  - SpawnRpc
+  - SpawnBulletRpc
+  - SpawnBulletRPC
+  - FollowRPC
+  - FollowRpc
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

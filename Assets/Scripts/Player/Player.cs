@@ -256,6 +256,7 @@ public class Player : Entity
         if (weapon == null) return;
         if (weapon.model == null) return;
         view.RPC("ChangeWeaponRpc", RpcTarget.AllBuffered,weapon.name, isLeft);
+        controller.CalculateAttack();
     }
     
     [PunRPC]

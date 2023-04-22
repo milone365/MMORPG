@@ -30,6 +30,8 @@ public static class Effects
     public const string DamagePopUp = "DamagePopUp";
     public const string HealPopUp = "HealPopUp";
     public const string LevelUp = "LevelUp";
+    public const string Slash = "Slash";
+    
 }
 
 public static class Helper

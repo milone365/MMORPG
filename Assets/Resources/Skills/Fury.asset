@@ -10,18 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59b58bc8c7beaa348ba4e3bffa06ef0f, type: 3}
-  m_Name: BowShot
+  m_Name: Fury
   m_EditorClassIdentifier: 
-  animName: 1
-  sprite: {fileID: 21300000, guid: a67b58d6cddcd4345b1e001340de5a76, type: 3}
-  cost: 15
+  animName: 11
+  sprite: {fileID: 21300000, guid: c890dd06d4a350946ab11e4778bf47d8, type: 3}
+  cost: 2
   countDown: 3
   activationTime: 5
-  skillRange: 15
+  skillRange: 5
   spellTarget: 2
   spellPower: 1
   radius: 5
-  spellPrefab: {fileID: 0}
+  spellPrefab: {fileID: 5767669185186285101, guid: 60339b431b2e1d44899e61694b385cf2, type: 3}
   effectOffset: {x: 0, y: -1, z: 0}
-  effectName: BlackAura
-  needRPC: 1
+  effectName: Slash

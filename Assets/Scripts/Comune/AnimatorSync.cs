@@ -9,6 +9,8 @@ public class AnimatorSync : MonoBehaviourPun
     public Animator anim;
     PhotonView view;
     public System.Action OnEndAnimationEvent = null;
+    Skill skill;
+    Entity owner, target;
     public void Init()
     {
         anim = GetComponent<Animator>();
@@ -56,4 +58,6 @@ public class AnimatorSync : MonoBehaviourPun
             OnEndAnimationEvent.Invoke();
         }
     }
+
+
 }

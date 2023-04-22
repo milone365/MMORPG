@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="NewSkill",menuName ="ScriptableObject/Skills")]
 public class Skill : ScriptableObject
 {
-    public AnimName animName=AnimName.atk;
+    public AnimName animName=AnimName.SpellCast;
     public Sprite sprite;
     public int cost = 2;
     public float countDown = 3;
@@ -17,6 +17,8 @@ public class Skill : ScriptableObject
     public Spell spellPrefab = null;
     public Vector3 effectOffset = new Vector3(0, -1, 0);
     public string effectName = "BlackAura";
+
+    
 }
 
 public enum SpellTarget
@@ -30,7 +32,10 @@ public enum SpellTarget
 
 public enum AnimName
 {
-    atk,
+    AtkRight,
+    AtkLeft,
+    AtkDouble,
+    Unarmed,
     BowShot,
     BlockingLoop,
     Buff,

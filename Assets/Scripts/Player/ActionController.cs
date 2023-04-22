@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class ActionController : MonoBehaviour
 {
     [SerializeField]
@@ -37,7 +36,7 @@ public class ActionController : MonoBehaviour
     }
     Entity target;
     public Skill currentSkill=null;
-
+    public string MeleeAttack="";
     public void Init(Player player)
     {
         this.player = player;
@@ -120,7 +119,7 @@ public class ActionController : MonoBehaviour
        if(!attackTimer.timerActive(delta))
         {
             attackTimer.StartTimer(attackDealy);
-            sync.PlayAnimation("atk");
+            sync.PlayAnimation(MeleeAttack);
             enemyTarget.TakeDamage(GetDamage());
             enemyTarget.AddToBattleList(player);
         }
@@ -272,6 +271,32 @@ public class ActionController : MonoBehaviour
         if (currentSkill.spellPrefab == null) return;
         var spell = Instantiate(currentSkill.spellPrefab);
         spell.Initialize(currentSkill, player, target);
+        
+    }
+    
+    public void CalculateAttack()
+    {
+        Equip left = inventory.leftWeapon; 
+        Equip right= inventory.rightWeapon;
+
+        if (left!=null && right!=null)
+        {
+            MeleeAttack = AnimName.AtkDouble.ToString();
+            return;
+        }
+        if(left!=null)
+        {
+            MeleeAttack = AnimName.AtkLeft.ToString();
+            return;
+        }
+        if(right!=null)
+        {
+            MeleeAttack = AnimName.AtkRight.ToString();
+        }
+        else
+        {
+            MeleeAttack = AnimName.Unarmed.ToString();
+        }
     }
 }
 
