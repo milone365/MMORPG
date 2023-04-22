@@ -6440,6 +6440,8 @@ MonoBehaviour:
     y: 0
     z: 0
     experience: 0
+    talentPoint: 0
+    talentList: []
   rotSpeed: 2
   scrollAmount: 3
   minZoom: 10
@@ -6450,6 +6452,7 @@ MonoBehaviour:
   inAction: 0
   LeftHolder: {fileID: 726390424}
   rightHolder: {fileID: 2144485004}
+  talentList: []
 --- !u!114 &1312401200
 MonoBehaviour:
   m_ObjectHideFlags: 0

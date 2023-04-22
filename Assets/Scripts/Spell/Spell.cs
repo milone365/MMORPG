@@ -8,9 +8,11 @@ public abstract class Spell : MonoBehaviour
     public float counter = 0;
     public const float second = 1;
     public int spellPower=1;
+    [SerializeField]
+    protected BonusTarget bonusTarget = BonusTarget.intellect;
     public virtual void Initialize(Skill skill,Entity owner=null,Entity target=null)
     {
-        spellPower = Helper.GetParameter(owner, StaticStrings.intellect);
+        spellPower = Helper.GetParameter(owner, bonusTarget.ToString());
         spellPower += skill.spellPower;
         Collider[] colliders = Physics.OverlapSphere(transform.position, skill.radius);
         switch (skill.spellTarget)

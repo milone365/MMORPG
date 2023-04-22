@@ -38,6 +38,8 @@ public class UIManager : MonoBehaviour
     BuffSlot buffSlot = null;
     [SerializeField]
     Transform grid = null;
+    [SerializeField]
+    TalentBook talentBook = null;
 
     private void Awake()
     {
@@ -200,4 +202,9 @@ public class UIManager : MonoBehaviour
         slot.Init(WorldManager.instance.GetSprite(spriteName),lifeTime);
     }
 
+    public void GenerateTalentBook()
+    {
+        var b = Instantiate(talentBook);
+        b.Intit(player);
+    }
 }

@@ -2547,6 +2547,7 @@ MonoBehaviour:
   popUpBase: {fileID: 8827082005453948179, guid: 6764b70b2f67b374180ed68f6498f4a0, type: 3}
   buffSlot: {fileID: 4252053279742917624, guid: 00ecb39e8bfb6d34480e5c681842ccfc, type: 3}
   grid: {fileID: 4129576356653673906}
+  talentBook: {fileID: 921954545319512585, guid: 246d71b4e72ad184f9c119a0546af2d5, type: 3}
 --- !u!1 &2023339601709155949
 GameObject:
   m_ObjectHideFlags: 0
@@ -9955,7 +9956,7 @@ GameObject:
   - component: {fileID: 7252669412120569327}
   - component: {fileID: 7252669412120569324}
   m_Layer: 5
-  m_Name: Button (Legacy) (3)
+  m_Name: TalentTree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10063,7 +10064,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7252669412120569327}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2023339601464910975}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: GenerateTalentBook
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7252669412140332455
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-
+using System.Linq;
 public class Player : Entity
 {
     public SaveData data = new SaveData();
@@ -37,7 +37,9 @@ public class Player : Entity
         if (t.childCount < 1) return null;
         return t.GetChild(0).gameObject;
     }
-
+    [SerializeField]
+    List<Pair<Talent,int>> talentList = new List<Pair<Talent,int>>();
+    Talent[] allTalents;
     public override void Init()
     {
         base.Init();
@@ -57,6 +59,7 @@ public class Player : Entity
         controller = GetComponent<ActionController>();
         controller.sync = sync;
         controller.Init(this);
+        LoadTalents();
         OnChangeItem();
         hp = maxHp;
         var f = Resources.Load<CameraFollow>(StaticStrings.follow);
@@ -129,7 +132,44 @@ public class Player : Entity
         }
     }
 
-    
+    void LoadTalents()
+    {
+        allTalents = Resources.LoadAll<Talent>("Talents").Where(x => x.charClass == data.stat.charClass).ToArray();
+        if (data.talentList.Count < 1)
+        {
+            foreach (var a in allTalents)
+            {
+                data.talentList.Add(new Pair<string, int>() { key = a.name, value = 0 });
+            }
+            
+        }
+        foreach (var a in allTalents)
+        {
+            for(int i=0;i<data.talentList.Count;i++)
+            {
+                if(a.name==data.talentList[i].key)
+                {
+                    talentList.Add(new Pair<Talent, int>() { key = a, value = data.talentList[i].value });
+                }
+            }
+        }
+
+    }
+
+    public void UpdateTalentList()
+    {
+        talentList.Clear();
+        foreach (var a in allTalents)
+        {
+            for (int i = 0; i < data.talentList.Count; i++)
+            {
+                if (a.name == data.talentList[i].key)
+                {
+                    talentList.Add(new Pair<Talent, int>() { key = a, value = data.talentList[i].value });
+                }
+            }
+        }
+    }
     public void Respawn(bool inPlace=false)
     {
         if(inPlace==false)

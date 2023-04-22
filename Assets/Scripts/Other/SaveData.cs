@@ -15,5 +15,6 @@ public class SaveData
     public int currentLevel = 1;
     public float x, y, z;
     public int experience = 0;
-    //public int currentHp=0, currentMana=0;
+    public int talentPoint=0;
+    public List<Pair<string, int>> talentList = new List<Pair<string, int>>();
 }

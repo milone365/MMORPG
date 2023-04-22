@@ -119,6 +119,7 @@ public static class Helper
         return val;
     }
 
+    const int talentFrequency = 5;
     public static void GoNextLevel(ref SaveData data)
     {
         while(data.stat.Level<100 && data.experience>=GetNextLevelExperience(data.stat.Level))
@@ -132,6 +133,10 @@ public static class Helper
                 data.stat.Strenght++;
                 data.stat.Intellect++;
                 data.stat.Agility++;
+                if(data.stat.Level%talentFrequency==0)
+                {
+                    data.talentPoint++;
+                }
             }
         }
     }
