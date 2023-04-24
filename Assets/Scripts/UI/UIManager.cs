@@ -40,7 +40,10 @@ public class UIManager : MonoBehaviour
     Transform grid = null;
     [SerializeField]
     TalentBook talentBook = null;
-
+    [SerializeField]
+    Text manaText = null, hpText = null;
+    [SerializeField]
+    DisableOverTime drop_banner = null;
     private void Awake()
     {
         instance = this;
@@ -137,6 +140,12 @@ public class UIManager : MonoBehaviour
         banner.gameObject.SetActive(true);
         banner.Init(message, lifetime);
     }
+
+    public void ShowDropBanner(string message,float lifetime)
+    {
+        drop_banner.gameObject.SetActive(true);
+        drop_banner.Init(message, lifetime);
+    }
     void RecordStrings<T>(ref List<string>list,List<T>template)where T:ScriptableObject
     {
         list.Clear();
@@ -176,11 +185,13 @@ public class UIManager : MonoBehaviour
     {
         hpBar.maxValue = max;
         hpBar.value = current;
+        hpText.text = current + " / " + max;
     }
     public void UpdateMana(int current, int max)
     {
         manaBar.maxValue = max;
         manaBar.value = current;
+        manaText.text = current + " / " + max;
     }
 
     public void ShowResurrectionRequest()

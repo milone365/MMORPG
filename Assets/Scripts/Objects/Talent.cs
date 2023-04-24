@@ -18,5 +18,6 @@ public enum BonusTarget
 {
     stamina, strenght,
     intellect, agility,
-    armor
+    armor,healingSpell,
+    
 }

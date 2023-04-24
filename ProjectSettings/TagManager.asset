@@ -8,6 +8,8 @@ TagManager:
   - EquipSlot
   - teleport
   - FxTemporaire
+  - rock
+  - flower
   layers:
   - Default
   - TransparentFX
@@ -19,7 +21,7 @@ TagManager:
   - Enemy
   - Floor
   - Other
-  - 
+  - NPC
   - 
   - 
   - 

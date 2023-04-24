@@ -13,7 +13,8 @@ public class Player : Entity
     float scrollAmount = 3;
     [SerializeField]
     float minZoom = 10, maxZoom = 120;
-    ActionController controller;
+    [HideInInspector]
+    public ActionController controller;
     const float second = 1;
     float manaCounter=1;
     public bool CanMove = true;
@@ -37,8 +38,7 @@ public class Player : Entity
         if (t.childCount < 1) return null;
         return t.GetChild(0).gameObject;
     }
-    [SerializeField]
-    List<Pair<Talent,int>> talentList = new List<Pair<Talent,int>>();
+    public List<Pair<Talent,int>> talentList = new List<Pair<Talent,int>>();
     Talent[] allTalents;
     public override void Init()
     {
@@ -190,6 +190,8 @@ public class Player : Entity
     {
         int stamina = stats().Stamina + controller.inventory.GetParameter(StaticStrings.stamina);
         int intellect=stats().Intellect+ controller.inventory.GetParameter(StaticStrings.intellect);
+        stamina += Helper.TalentAmount(talentList,BonusTarget.stamina);
+        intellect += Helper.TalentAmount(talentList, BonusTarget.intellect);
         CalculateStats(stamina,intellect);
         if(hp>maxHp)
         {
@@ -199,6 +201,8 @@ public class Player : Entity
         {
             controller.mana = maxMana;
         }
+        UIManager.instance.UpdateHP(hp, maxHp);
+        UIManager.instance.UpdateMana(controller.mana, maxMana);
     }
     public void LockPlayer()
     {
@@ -313,4 +317,5 @@ public class Player : Entity
         newWeapon.transform.localPosition = (isLeft == true) ? weapon.leftPos : weapon.rightPos;
         newWeapon.transform.localRotation = Quaternion.Euler((isLeft == true) ? weapon.leftRot : weapon.rightRot);
     }
+
 }

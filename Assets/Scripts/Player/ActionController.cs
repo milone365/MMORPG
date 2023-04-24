@@ -32,7 +32,7 @@ public class ActionController : MonoBehaviour
     Texture2D[] cursorList = null;
     enum Cursors
     {
-        normal,atk,pik,bag,teleport
+        normal,atk,pik,bag,teleport,flower
     }
     Entity target;
     public Skill currentSkill=null;
@@ -208,6 +208,12 @@ public class ActionController : MonoBehaviour
                         }
                     }
                     break;
+                case StaticStrings.rock:
+                    Cursor.SetCursor(cursorList[(int)Cursors.pik], Vector2.zero, CursorMode.Auto);
+                    break;
+                case StaticStrings.flower:
+                    Cursor.SetCursor(cursorList[(int)Cursors.flower], Vector2.zero, CursorMode.Auto);
+                    break;
             }
         }
         else
@@ -297,6 +303,13 @@ public class ActionController : MonoBehaviour
         {
             MeleeAttack = AnimName.Unarmed.ToString();
         }
+    }
+
+    public void Gather(string animName)
+    {
+        inAction = true;
+        sync.anim.SetBool(StaticStrings.inAction, inAction);
+        sync.PlayAnimation(animName);
     }
 }
 

@@ -54,6 +54,7 @@ public class Enemy : Entity
                   foreach(var item in haveBattleList)
                   {
                       item.AddExperience(exp);
+                      item.GetInventory().KillRecord(EnemyName);
                   }
                   haveBattleList.Clear();
               }

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using System;
 
 public static class StaticStrings 
 {
@@ -21,6 +23,8 @@ public static class StaticStrings
     public const string teleport = "teleport";
     public const string resurrection = "Resurrection";
     public const string inAction="inAction";
+    public const string rock = "rock";
+    public const string flower = "flower";
 }
 
 public static class Effects
@@ -32,118 +36,4 @@ public static class Effects
     public const string LevelUp = "LevelUp";
     public const string Slash = "Slash";
     
-}
-
-public static class Helper
-{
-    public static Color GetColor(Rarety rare)
-    {
-        Color c=Color.white;
-        switch (rare)
-        {
-            case Rarety.comune:
-                c = Color.gray;
-                break;
-            case Rarety.good:
-                c = Color.green;
-                break;
-            case Rarety.rare:
-                c = Color.blue;
-                break;
-            case Rarety.epic:
-                c = Color.magenta;
-                break;
-            case Rarety.legendary:
-                c = Color.cyan;
-                break;
-        }
-        //c = new Color(c.r, c.g, c.b, 1);
-        return c;
-    }
-
-    public static int GetParameter(Entity owner,string param)
-    {
-        int val = 0;
-        Player player = owner as Player;
-        if(player!=null)
-        {
-            switch (param)
-            {
-                case StaticStrings.strenght:
-                    val += player.GetInventory().GetParameter(param) + 
-                        player.data.stat.Strenght + player.strengtBonus.GetBonus();
-                    break;
-                case StaticStrings.agility:
-                    val += player.GetInventory().GetParameter(param) +
-    player.data.stat.Agility + player.agilityBonus.GetBonus();
-                    break;
-                case StaticStrings.intellect:
-                    val += player.GetInventory().GetParameter(param) +
-    player.data.stat.Intellect + player.intellectBonus.GetBonus();
-                    break;
-                case StaticStrings.armor:
-                    val += player.GetInventory().GetParameter(param) + player.armorBonus.GetBonus();
-                    break;
-            }
-        }
-        else
-        {
-            Enemy enemy = owner as Enemy;
-            if(enemy!=null)
-            {
-                switch (param)
-                {
-                    case StaticStrings.strenght:
-                        val += enemy.GetParameter(param) +
-                            enemy.stats.Strenght + enemy.strengtBonus.GetBonus();
-                        break;
-                    case StaticStrings.agility:
-                        val += enemy.GetParameter(param) +
-        enemy.stats.Agility + enemy.agilityBonus.GetBonus();
-                        break;
-                    case StaticStrings.intellect:
-                        val += enemy.GetParameter(param) +
-        enemy.stats.Intellect + enemy.intellectBonus.GetBonus();
-                        break;
-                    case StaticStrings.armor:
-                        val += enemy.GetParameter(param) + enemy.armorBonus.GetBonus();
-                        break;
-                }
-            }
-        }
-        if(val<=0)
-        {
-            val = 1;
-        }
-        
-        return val;
-    }
-
-    const int talentFrequency = 5;
-    public static void GoNextLevel(ref SaveData data)
-    {
-        while(data.stat.Level<100 && data.experience>=GetNextLevelExperience(data.stat.Level))
-        {
-            int toRemove = GetNextLevelExperience(data.stat.Level);
-            if (data.experience>=toRemove)
-            {
-                data.experience -= toRemove;
-                data.stat.Level++;
-                data.stat.Stamina++;
-                data.stat.Strenght++;
-                data.stat.Intellect++;
-                data.stat.Agility++;
-                if(data.stat.Level%talentFrequency==0)
-                {
-                    data.talentPoint++;
-                }
-            }
-        }
-    }
-
-    static int GetNextLevelExperience(int level)
-    {
-        var val = level * 1.33 * 100;
-        return (int)val;
-    }
 }

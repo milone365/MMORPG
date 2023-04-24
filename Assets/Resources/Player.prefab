@@ -6442,10 +6442,13 @@ MonoBehaviour:
     experience: 0
     talentPoint: 0
     talentList: []
+    activeQuestList: []
+    completedQuestList: []
   rotSpeed: 2
   scrollAmount: 3
   minZoom: 10
   maxZoom: 120
+  controller: {fileID: 0}
   CanMove: 1
   uiMan: {fileID: 2023339601464910974, guid: 2340294b2fe4c874f80b0cb3e3140909, type: 3}
   debugClass: 0
@@ -6528,5 +6531,6 @@ MonoBehaviour:
   - {fileID: 2800000, guid: b23a0084fea403945a302e12cc707439, type: 3}
   - {fileID: 2800000, guid: f8c873f1e53e83f4aabf342d6be1dfc3, type: 3}
   - {fileID: 2800000, guid: 1e1ecf843f705b34ab304dff88b037c1, type: 3}
+  - {fileID: 2800000, guid: a75c68d8f8b30c24788e1ae1ea050ac4, type: 3}
   currentSkill: {fileID: 0}
   MeleeAttack: 

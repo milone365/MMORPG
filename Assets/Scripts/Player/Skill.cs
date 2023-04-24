@@ -43,5 +43,7 @@ public enum AnimName
     MeeleeAttack_TwoHanded,
     SpellCast,
     SpinLoop_TwoHanded,
-    SpinAttack_TwoWeapons
+    SpinAttack_TwoWeapons,
+    MiningLoop,
+    Gathering
 }

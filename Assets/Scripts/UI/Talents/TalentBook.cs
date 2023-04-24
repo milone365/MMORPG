@@ -47,7 +47,7 @@ public class TalentBook : MonoBehaviour
             }
         }
         player.UpdateTalentList();
-        //UIManager.instance.SaveGame(false);
+        player.OnChangeItem();
         Destroy(gameObject);
     }
     

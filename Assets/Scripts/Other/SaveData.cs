@@ -17,4 +17,6 @@ public class SaveData
     public int experience = 0;
     public int talentPoint=0;
     public List<Pair<string, int>> talentList = new List<Pair<string, int>>();
+    public List<QuestData> activeQuestList = new List<QuestData>();
+    public List<QuestData> completedQuestList = new List<QuestData>();
 }
