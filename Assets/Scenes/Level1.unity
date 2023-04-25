@@ -977,7 +977,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d12ab80b36a9da4eb47b5cf55148d5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 11400000, guid: 8a50c994a047de44fa796ee991ae1667, type: 2}
+  quest: {fileID: 11400000, guid: 37d158df504120440bbb9015f6f8cccd, type: 2}
   prefab: {fileID: 1340340838237743846, guid: 758684d86f130304ba47cf15081e56bc, type: 3}
 --- !u!1001 &1458675895437106255
 PrefabInstance:
@@ -994,6 +994,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 692033005301971703, guid: 6d115f9516c337f49a97179c71a7c5f5, type: 3}
+      propertyPath: dropList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 692033005301971703, guid: 6d115f9516c337f49a97179c71a7c5f5, type: 3}
+      propertyPath: dropList.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: a1830f33612ad18438a83910ccf80aaa, type: 2}
+    - target: {fileID: 692033005301971703, guid: 6d115f9516c337f49a97179c71a7c5f5, type: 3}
+      propertyPath: dropList.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 3734e616fc814044f8d8e277b369f1c9, type: 2}
+    - target: {fileID: 692033005301971703, guid: 6d115f9516c337f49a97179c71a7c5f5, type: 3}
+      propertyPath: dropList.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: a1830f33612ad18438a83910ccf80aaa, type: 2}
     - target: {fileID: 692033005301971710, guid: 6d115f9516c337f49a97179c71a7c5f5, type: 3}
       propertyPath: m_RootOrder
       value: 3

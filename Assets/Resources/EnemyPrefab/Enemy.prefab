@@ -397,7 +397,7 @@ MonoBehaviour:
   direction: {x: 0, y: 0, z: 5}
   patrolDist: 1
   staticEnemy: 0
-  respawnTime: 10
+  respawnTime: 180
   actionRadius: 5
   attackRange: 2
   attackSpeed: 2
@@ -420,6 +420,7 @@ MonoBehaviour:
   rightWeapon: {fileID: 0}
   exp: 300
   haveBattleList: []
+  dropList: []
 --- !u!1 &785175749616769169
 GameObject:
   m_ObjectHideFlags: 0

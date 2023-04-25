@@ -2648,6 +2648,7 @@ MonoBehaviour:
   manaText: {fileID: 1818023238212812274}
   hpText: {fileID: 3028255402939594560}
   drop_banner: {fileID: 5544514999648529627}
+  dropPrefab: {fileID: 1417096090485209885, guid: e3820b7e654876e45b3ddde9d96e45ed, type: 3}
 --- !u!1 &2023339601709155949
 GameObject:
   m_ObjectHideFlags: 0

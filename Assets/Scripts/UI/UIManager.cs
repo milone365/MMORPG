@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,6 @@ public class UIManager : MonoBehaviour
 {
     public GameObject deathPanel = null;
     public Player player { get; set; }
-
     public static UIManager instance;
     public bool uiIsOpen = false;
     public Chat chat;
@@ -44,6 +44,11 @@ public class UIManager : MonoBehaviour
     Text manaText = null, hpText = null;
     [SerializeField]
     DisableOverTime drop_banner = null;
+    [SerializeField]
+    DropPanel dropPrefab = null;
+    DropPanel dropPanel { get; set;}
+
+
     private void Awake()
     {
         instance = this;
@@ -171,7 +176,15 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    
+    public void OpeDropList(Enemy enemy, Player player)
+    {
+        if(dropPanel==null)
+        {
+            dropPanel = Instantiate(dropPrefab);
+            dropPanel.Init(enemy, player);
+        }
+    }
+
     public void SetUpPlayer(Player player)
     {
         this.player = player;

@@ -11,9 +11,11 @@ public class Bullet : Spell
     [SerializeField]
     Transform child = null;
     BulletFollower follower;
+    Entity owner;
     public override void Initialize(Skill skill, Entity owner = null, Entity target = null)
     {
         base.Initialize(skill, owner, target);
+        this.owner = owner;
         if (target is Player)
         {
             targetName = StaticStrings.player;
@@ -50,6 +52,11 @@ public class Bullet : Spell
             Entity entity = other.GetComponent<Entity>();
             if(entity!=null)
             {
+                Enemy enemy = entity as Enemy;
+                if(enemy!=null)
+                {
+                    enemy.AddToBattleList(owner as Player);
+                }
                 entity.TakeDamage(spellPower);
                 Destroy(gameObject);
             }

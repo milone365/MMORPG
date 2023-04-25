@@ -201,11 +201,14 @@ public class Inventory
         QuestData data = null;
         foreach(var q in player.data.activeQuestList)
         {
-            if(q.requiredObjet== ItemName)
+            foreach(var r in q.requiredObjetList)
             {
-                data = q;
-                break;
-            }
+                if (r.objectName == ItemName)
+                {
+                    data = q;
+                    break;
+                }
+            }   
         }
         if(data==null)
         {
@@ -217,12 +220,25 @@ public class Inventory
             Quest q = Helper.GetQuest(allQuest, data);
             if(q!=null)
             {
-                data.currentAmount++;
-                if(data.currentAmount>=q.requiredAmount)
+                bool questCompleted = true;
+                foreach (var r in data.requiredObjetList)
+                {
+                    if (r.objectName == ItemName)
+                    {
+                        r.currentAmount++;
+                        UIManager.instance.ShowDropBanner(ItemName + " " + r.currentAmount + " / " + r.requiredAmount, 2.5f);
+                    }
+                    if (r.currentAmount < r.requiredAmount)
+                    {
+                        questCompleted = false;
+                    }
+                }
+                if(questCompleted)
                 {
                     data.questCompleted = true;
                 }
-                UIManager.instance.ShowDropBanner(ItemName +" " + data.currentAmount + " / " + q.requiredAmount , 2.5f);
+               
+                
             }
         }
     }

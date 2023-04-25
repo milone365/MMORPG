@@ -38,6 +38,9 @@ public class Enemy : Entity
     public Equip leftWeapon, rightWeapon;
     public int exp = 100;
     public List<Player> haveBattleList = new List<Player>();
+    public List<Item> dropList = new List<Item>();
+    [HideInInspector]
+    public bool CanTakeDrop = true;
     public override void Init()
     {
         base.Init();
@@ -111,6 +114,8 @@ public class Enemy : Entity
 
     public void AddToBattleList(Player player)
     {
+        if (player == null) return;
+
         bool exist = false;
         foreach(var item in haveBattleList)
         {
@@ -231,6 +236,7 @@ public class Enemy : Entity
 
     void Respawn()
     {
+        CanTakeDrop = true;
         hp = maxHp;
         view.RPC("SyncronizeStat", RpcTarget.All, hp, maxHp);
         sync.IsDead(false);

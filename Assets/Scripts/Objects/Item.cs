@@ -8,4 +8,5 @@ public class Item : ScriptableObject
     public Sprite sprite;
     public string description;
     public int cost = 0;
+    public int dropRate = 75;
 }

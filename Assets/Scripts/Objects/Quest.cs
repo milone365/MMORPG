@@ -5,8 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewItem", menuName = "ScriptableObject/Quest")]
 public class Quest : ScriptableObject
 {
-    public QuestData data=new QuestData();
-    public int requiredAmount = 1;
+    public QuestData data=new QuestData();   
     public int coin = 1;
     public int expPoints = 100;
     public Item itemToGive = null;
@@ -19,9 +18,18 @@ public class Quest : ScriptableObject
 public class QuestData
 {
     public string questName = "";
-    public string requiredObjet = "key";
-    public int currentAmount = 0;
+    public List<Required> requiredObjetList = new List<Required>();    
     public bool questCompleted = false;
+}
+
+[System.Serializable]
+public class Required
+{
+    public string objectName = "key";
+    public Sprite objectSprite = null;
+    public int requiredAmount = 1;
+    [HideInInspector]
+    public int currentAmount = 0;
 }
 
 public enum QuestType

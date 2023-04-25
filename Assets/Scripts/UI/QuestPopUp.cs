@@ -14,6 +14,10 @@ public class QuestPopUp : MonoBehaviour
     GameObject slot = null;
     [SerializeField]
     Button confirmButton = null,cancelButton=null,completeButton=null;
+    [SerializeField]
+    GameObject requiredSlot = null;
+    [SerializeField]
+    Transform parent = null;
 
     public void Initialize(Quest quest,QuestGiver giver,Player player)
     {
@@ -24,6 +28,7 @@ public class QuestPopUp : MonoBehaviour
         coinText.text = "coin : " + quest.coin;
         expText.text = "exp: " + quest.expPoints;
         description.text = quest.description;
+        CreateBox();
         QuestData currentData = Helper.GetQuestData(player.data.activeQuestList,quest.data);
         if(currentData!=null)
         {
@@ -36,6 +41,24 @@ public class QuestPopUp : MonoBehaviour
         }
     }
 
+    void CreateBox()
+    {
+        description.text += "\n";
+        description.text += "\n";
+        description.text += "Bring Me: " + "\n";
+        description.text += "\n";
+
+        foreach (var r in quest.data.requiredObjetList)
+        {
+            GameObject g = Instantiate(requiredSlot, parent);
+            g.SetActive(true);
+            g.GetComponentInChildren<Text>().text = r.currentAmount + "/" + r.requiredAmount;
+            if(r.objectSprite!=null)
+            g.transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite = r.objectSprite; 
+            description.text += "*" + r.objectName + " x " + r.requiredAmount;
+            description.text += "\n";
+        }
+    }
     public void ClosePopUp()
     {
         player.CanMove = true;
@@ -43,11 +66,12 @@ public class QuestPopUp : MonoBehaviour
     }
     public void Confirm()
     {
-        QuestData dat = new QuestData()
+        QuestData dat = quest.data;
+        dat.questCompleted = false;
+        foreach(var r in dat.requiredObjetList)
         {
-            currentAmount = 0, questCompleted = false,
-            questName = quest.data.questName, requiredObjet = quest.data.requiredObjet
-        };
+            r.currentAmount = 0;
+        }
         player.data.activeQuestList.Add(dat);
         UIManager.instance.ShowBanner("Quest Accepted: " + quest.data.questName);
         ClosePopUp();
