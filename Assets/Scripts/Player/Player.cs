@@ -286,13 +286,16 @@ public class Player : Entity
         if (!photonView.IsMine) return;
 
         data.experience += experience;
-        Helper.GoNextLevel(ref data);
+        bool goUp= Helper.GoNextLevel(ref data);
         UIManager.instance.SetUpPlayer(this);
-        Vector3 pos = transform.position + new Vector3(0, -1, 0);
-        Vector3 rot = new Vector3(-90, 0, 0);
-        WorldManager.instance.SpawnEffect(Effects.LevelUp, pos, rot);
-        OnChangeItem();
-        UpdateUI(hp, maxHp);
+        if(goUp)
+        {
+            Vector3 pos = transform.position + new Vector3(0, -1, 0);
+            Vector3 rot = new Vector3(-90, 0, 0);
+            WorldManager.instance.SpawnEffect(Effects.LevelUp, pos, rot);
+            OnChangeItem();
+            UpdateUI(hp, maxHp);
+        }
     }
 
     public void ChangeWeapon(Equip weapon,bool isLeft)

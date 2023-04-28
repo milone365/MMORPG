@@ -12,9 +12,8 @@ public class Inventory
     public Equip head, body, leg, shoes,belt,shoulder;
     public Equip leftWeapon, rightWeapon;
     public Equip lastEquip;
-    public int coin = 0;
     List<Quest> allQuest = new List<Quest>();
-    List<string> killRecord = new List<string>();
+    public List<string> killRecord = new List<string>();
     public List<Equip> AllEquip()
     {
         List<Equip> equipList = new List<Equip>();
@@ -246,6 +245,45 @@ public class Inventory
     {
         killRecord.Add(killed);
         QuestCheck(killed,true);
+    }
+
+    public int GetKilledCount(string EnemyName)
+    {
+        var val = 0;
+        foreach(var e in killRecord)
+        {
+            if(e==EnemyName)
+            {
+                val++;
+            }
+        }
+        return val;
+    }
+    public int GetItemCount(string ItemName)
+    {
+        int val = 0;
+        foreach(var i in items)
+        {
+            if(i.name==ItemName)
+            {
+                val++;
+            }
+        }
+        return val;
+    }
+
+    public void RemoveAllItemByName(string name)
+    {
+        var arr = items.Where(x => x.name != name).ToList();
+        items = arr;
+    }
+
+    public void SellItem(int price, Item i)
+    {
+        items.Remove(i);
+        if (price == 0) return;
+        
+        player.data.coin += price;
     }
 }
 

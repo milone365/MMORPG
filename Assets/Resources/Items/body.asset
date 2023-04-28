@@ -14,7 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 603e026921ee6c44ab5c48b149bb31e9, type: 3}
   description: 
-  cost: 0
+  cost: 10
+  dropRate: 75
+  reciepe:
+  - key: {fileID: 11400000, guid: a1830f33612ad18438a83910ccf80aaa, type: 2}
+    value: 1
+  - key: {fileID: 11400000, guid: 7851a77d2eec90b408ca25848cb9f5da, type: 2}
+    value: 1
   type: 1
   rarety: 0
   stamina: 5
@@ -22,3 +28,8 @@ MonoBehaviour:
   intellect: 0
   agility: 0
   armor: 0
+  model: {fileID: 0}
+  leftPos: {x: 0, y: 0, z: 0}
+  rightPos: {x: 0, y: 0, z: 0}
+  leftRot: {x: 0, y: 0, z: 0}
+  rightRot: {x: 0, y: 0, z: 0}

@@ -27,7 +27,7 @@ public class Teleport : MonoBehaviour, Interactable
     IEnumerator ChangeSceneCo(Player p)
     {
         p.data.LevelName = level.ToString();
-        p.data.currentLevel = (int)level;
+        p.data.currentScene = (int)level;
         SaveManager.SaveData<SaveData>(p.data.characterName, p.data);
         WorldManager.instance.playerList.Remove(p.transform);
         NetworkManager.instance.fadescreen.Play("FadeIn");

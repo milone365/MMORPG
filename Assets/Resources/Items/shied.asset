@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: shied
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 97e0f0ea6c148e54d9e34e9cddbb5db1, type: 3}
-  description: 
-  cost: 0
+  description: Strong shiedl
+  cost: 33
+  dropRate: 75
   type: 6
   rarety: 1
   stamina: 3

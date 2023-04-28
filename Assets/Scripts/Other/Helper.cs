@@ -90,8 +90,9 @@ public static class Helper
     }
 
     const int talentFrequency = 5;
-    public static void GoNextLevel(ref SaveData data)
+    public static bool GoNextLevel(ref SaveData data)
     {
+        bool goUp = false;
         while (data.stat.Level < 100 && data.experience >= GetNextLevelExperience(data.stat.Level))
         {
             int toRemove = GetNextLevelExperience(data.stat.Level);
@@ -107,8 +108,10 @@ public static class Helper
                 {
                     data.talentPoint++;
                 }
+                goUp = true;
             }
         }
+        return goUp;
     }
 
     static int GetNextLevelExperience(int level)

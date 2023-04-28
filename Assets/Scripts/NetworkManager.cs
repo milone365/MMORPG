@@ -57,7 +57,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             o.SetActive(false);
         }
         var data = CharacterCreate.selectedData;
-        currentLevel = data.currentLevel;
+        currentLevel = data.currentScene;
         world = data.LevelName;
         fadescreen.Play("FadeIn");
         SaveManager.SaveData(data.characterName, data);

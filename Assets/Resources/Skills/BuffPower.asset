@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animName: 3
   sprite: {fileID: 21300000, guid: c6c531e9c23db0e40b2eba0a8f947629, type: 3}
+  requireLevel: 0
   cost: 2
+  desctiption: 
   countDown: 3
   activationTime: 15
   skillRange: 15

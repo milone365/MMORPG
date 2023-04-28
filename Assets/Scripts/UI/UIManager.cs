@@ -108,7 +108,7 @@ public class UIManager : MonoBehaviour
         var inventoy = controller.inventory;
         var data = player.data;
         var level = SceneManager.GetActiveScene();
-        data.currentLevel = level.buildIndex;
+        data.currentScene = level.buildIndex;
         data.LevelName = level.name;
         data.x = player.transform.position.x;
         data.y = player.transform.position.y;

@@ -9,8 +9,10 @@ public class DropPanel : MonoBehaviour
     [SerializeField]
     Transform parent = null;
     List<GameObject> dropList = new List<GameObject>();
+    Player player;
     public void Init(Enemy enemy, Player player)
     {
+        this.player = player;
         enemy.CanTakeDrop = false;
         foreach(var i in enemy.dropList)
         {
@@ -20,6 +22,7 @@ public class DropPanel : MonoBehaviour
             newSlot.SetUp(this,i,player);
             dropList.Add(newSlot.gameObject);
         }
+        player.LockPlayer();
     }
 
     public void RemoveObject(GameObject g)
@@ -33,6 +36,7 @@ public class DropPanel : MonoBehaviour
 
     public void ClosePanel()
     {
+        player.CanMove = true;
         Destroy(gameObject);
     }
 }

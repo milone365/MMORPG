@@ -24,8 +24,8 @@ MonoBehaviour:
       requiredAmount: 2
       currentAmount: 0
     questCompleted: 0
-  coin: 1
+  coin: 1000
   expPoints: 100
-  itemToGive: {fileID: 0}
+  itemToGive: {fileID: 11400000, guid: 7851a77d2eec90b408ca25848cb9f5da, type: 2}
   description: Kill My Enemy Please!!!
-  type: 0
+  type: 1

@@ -6444,6 +6444,7 @@ MonoBehaviour:
     talentList: []
     activeQuestList: []
     completedQuestList: []
+    coin: 0
   rotSpeed: 2
   scrollAmount: 3
   minZoom: 10
@@ -6523,7 +6524,7 @@ MonoBehaviour:
     leftWeapon: {fileID: 0}
     rightWeapon: {fileID: 0}
     lastEquip: {fileID: 0}
-    coin: 0
+    killRecord: []
   interactDistance: 5
   cursorList:
   - {fileID: 2800000, guid: 2e71a8202d3b4a3448ec85ced5a40265, type: 3}
