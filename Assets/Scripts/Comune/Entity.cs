@@ -38,7 +38,7 @@ public abstract class Entity : MonoBehaviourPun
     public Bonus intellectBonus = new Bonus();
     public Bonus agilityBonus = new Bonus();
     public Bonus armorBonus = new Bonus();
-
+    public AudioSource hitSource;
     public Transform spawnPoint = null;
 
     void Start()
@@ -57,6 +57,7 @@ public abstract class Entity : MonoBehaviourPun
         sync.Init();
         rb = GetComponent<Rigidbody>();
         view = PhotonView.Get(this);
+        hitSource = GetComponent<AudioSource>();
     }
     public virtual void Tick()
     {
@@ -116,6 +117,10 @@ public abstract class Entity : MonoBehaviourPun
                 }
             }
             view.RPC("SyncronizeStat", RpcTarget.All, hp,maxHp);
+        }
+        if(hitSource!=null)
+        {
+            hitSource.Play();
         }
     }
     [PunRPC]

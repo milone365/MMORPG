@@ -66,7 +66,7 @@ public class Enemy : Entity
         hp = maxHp;
         if(localUI!=null)
         {
-            nameText.text =EnemyName;
+            nameText.text =EnemyName +  "Lv: " + stats.Level;
         }
     }
     public override void Tick()

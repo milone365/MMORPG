@@ -84,6 +84,8 @@ public class UIManager : MonoBehaviour
 
     public void SpellBook()
     {
+        if (spellBook.gameObject.activeInHierarchy) return;
+
         spellBook.SetActive(true);
         List<Skill> allSkills = controller.inventory.skills; // inventory
         foreach(var s in allSkills)
